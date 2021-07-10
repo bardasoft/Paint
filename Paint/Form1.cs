@@ -10,9 +10,23 @@ using System.Windows.Forms;
 
 namespace Paint
 {
-    public partial class Form1 : Form
+    enum Shapes
     {
-        public Form1()
+        None,
+        Free,
+        Line,
+        Rectangle,
+        Square,
+        Elip,
+        Circle,
+        Triangle,
+        Petagon,
+        Hecxagon,
+        Fill,
+    }
+    public partial class frmPaint : Form
+    {
+        public frmPaint()
         {
             InitializeComponent();
         }

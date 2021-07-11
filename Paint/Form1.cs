@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Paint
         Point startPoint;
         Point endPoint;
         private Pen pen;
-        float widthPen =10;
+        float widthPen = 10;
         private Pen erase;
         float widthErase = 20;
         private Brush brush;
@@ -51,7 +52,8 @@ namespace Paint
             graphic.Clear(Color.White);
             picBoard.Image = bitmap;
 
-            pen = new Pen(Color.Black,widthPen);
+          
+            pen = new Pen(Color.Black, widthPen);
             erase = new Pen(Color.White, widthErase);
 
 
@@ -73,14 +75,19 @@ namespace Paint
                     graphic.DrawLine(pen, startPoint, endPoint);
                     startPoint = endPoint;
                 }
-                else if(shape == Shapes.Erase)
+                else if (shape == Shapes.Erase)
                 {
 
                     endPoint = e.Location;
                     graphic.DrawLine(erase, startPoint, endPoint);
                     startPoint = endPoint;
                 }
+                else if (shape == Shapes.Line)
+                {
+                    endPoint = e.Location;
+                    graphic.DrawLine(pen, startPoint, endPoint);
 
+                }
 
             }
 
@@ -89,7 +96,7 @@ namespace Paint
 
         private void picBoard_MouseUp(object sender, MouseEventArgs e)
         {
-            // picBoard.Refresh();
+
             paint = false;
 
         }
@@ -105,6 +112,9 @@ namespace Paint
 
         private void picBoard_Paint(object sender, PaintEventArgs e)
         {
+            graphic = e.Graphics;
+
+
             switch (shape)
             {
                 case Shapes.None:
@@ -112,7 +122,7 @@ namespace Paint
                 case Shapes.Free:
                     break;
                 case Shapes.Line:
-                    graphic.DrawLine(pen, startPoint, endPoint);
+
                     break;
                 case Shapes.Rectangle:
                     break;
@@ -154,6 +164,27 @@ namespace Paint
         {
             graphic.Clear(Color.White);
             picBoard.Refresh();
+        }
+
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            DialogResult dialogResult = colorDialog.ShowDialog();
+            if(dialogResult == DialogResult.OK)
+            {
+               pen.Color = colorDialog.Color;
+                
+            }
+        }
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+           
+            if(saveFileDialog.ShowDialog()== DialogResult.OK)
+            {
+                bitmap.Save(saveFileDialog.FileName + ".bmp", ImageFormat.Bmp);
+            }
+          
         }
     }
 }

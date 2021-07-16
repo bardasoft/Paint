@@ -20,5 +20,6 @@ namespace Paint.Data
         Petagon,
         Hecxagon,
         Fill,
+        Text,
     }
 }

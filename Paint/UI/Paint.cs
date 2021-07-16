@@ -27,24 +27,32 @@ namespace Paint.UI
 
         private Pen erase;
         private float widthErase = 20;
-        private Brush brush;
+        private SolidBrush brush;
         private Shape shape;
 
+        Color backGroundColor;
+
+        OpenFileDialog openFileDialog;
+        private SaveFileDialog saveFileDialog;
+        private string fileFommat = ".png";
         public frmPaint()
         {
             InitializeComponent();
+            openFileDialog = new OpenFileDialog()
+            { };
+            saveFileDialog = new SaveFileDialog();
             paint = false;
             Color penColor = Color.Black;
-            Color eraseColor = Color.White;
+           backGroundColor =  Color.White;
             bitmap = new Bitmap(picBoard.Width, picBoard.Height);
             graphic = Graphics.FromImage(bitmap);
             graphic.SmoothingMode = SmoothingMode.HighQuality;
-            graphic.Clear(eraseColor);
+            graphic.Clear(backGroundColor);
             picBoard.Image = bitmap;
 
             pen = new Pen(penColor, float.Parse(cbxSize.Text));
-            erase = new Pen(eraseColor, widthErase);
-
+            erase = new Pen(backGroundColor, widthErase);
+            brush = new SolidBrush(penColor);
             btnColor.BackColor = penColor;
         }
 
@@ -56,6 +64,7 @@ namespace Paint.UI
 
         private void picBoard_MouseMove(object sender, MouseEventArgs e)
         {
+            tssCoordinate.Text = $"{e.X} x {e.Y}";
             if (paint)
             {
                 endPoint = e.Location;
@@ -63,6 +72,7 @@ namespace Paint.UI
                 switch (shape)
                 {
                     case Shape.None:
+                        tssPrompt.Text = string.Empty;
                         break;
 
                     case Shape.Free:
@@ -115,8 +125,27 @@ namespace Paint.UI
             paint = false;
 
             Paint(graphic, shape);
-        }
 
+            switch (shape)
+            {
+                case Shape.Text:
+
+                    InputText inputText = new InputText();
+                    if (inputText.ShowDialog() == DialogResult.OK)
+                    {
+                        graphic.DrawString(inputText.InputString, new Font("Arial", 12), brush, startPoint);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            picBoard.Refresh();//call paint
+        }
+        private void btnNone_Click(object sender, EventArgs e)
+        {
+            shape = Shape.None;
+        }
         private void btnLine_Click(object sender, EventArgs e)
         {
             shape = Shape.Line;
@@ -172,6 +201,10 @@ namespace Paint.UI
                     break;
 
                 case Shape.Circle:
+                    Point center = startPoint;
+                    int radius = (int)Utilities.DistanceTwoPoints(startPoint, endPoint);
+                    Rectangle rect = new Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2);
+                    graphic.DrawEllipse(pen, rect);
                     break;
 
                 case Shape.Triangle:
@@ -185,19 +218,47 @@ namespace Paint.UI
 
                 case Shape.Fill:
                     break;
+                case Shape.Text:
+                    break;
 
                 default:
                     break;
             }
+           
         }
 
         private void picBoard_SizeChanged(object sender, EventArgs e)
         {
-            bitmap = new Bitmap(picBoard.Width, picBoard.Height);
-            graphic = Graphics.FromImage(bitmap);
-            graphic.Clear(Color.White);
+
+            
+           // graphic = Graphics.FromImage(bitmap);
+            //graphic.Clear(Color.White);
             picBoard.Image = bitmap;
+            XX(this.Width, picBoard.Height);
         }
+
+        void XX(float width, float height)
+        {
+           
+            //var brush = new SolidBrush(Color.Black);
+            //var image = new Bitmap(picBoard.Image);
+            //float scale = Math.Min(width / image.Width, height / image.Height);
+            //var bmp = new Bitmap((int)width, (int)height);
+            //var graph = Graphics.FromImage(bmp);
+          
+            //// uncomment for higher quality output
+            ////graph.InterpolationMode = InterpolationMode.High;
+            ////graph.CompositingQuality = CompositingQuality.HighQuality;
+            ////graph.SmoothingMode = SmoothingMode.AntiAlias;
+
+            //var scaleWidth = (int)(image.Width * scale);
+            //var scaleHeight = (int)(image.Height * scale);
+
+            //graph.FillRectangle(brush, new RectangleF(0, 0, width, height));
+            //graph.DrawImage(image, ((int)width - scaleWidth) / 2, ((int)height - scaleHeight) / 2, scaleWidth, scaleHeight);
+            
+        }
+
 
         private void btnErase_Click(object sender, EventArgs e)
         {
@@ -216,11 +277,19 @@ namespace Paint.UI
             shape = Shape.Rectangle;
         }
 
-        private void btnElip_Click(object sender, EventArgs e)
+        private void btnEllipse_Click(object sender, EventArgs e)
         {
             shape = Shape.Ellipse;
         }
-
+        private void btnCircle_Click(object sender, EventArgs e)
+        {
+            shape = Shape.Circle;
+        }
+        private void btnText_Click(object sender, EventArgs e)
+        {
+            shape = Shape.Text;
+            tssPrompt.Text = "Pick a point";
+        }
         private void btnFill_Click(object sender, EventArgs e)
         {
             shape = Shape.Fill;
@@ -233,11 +302,10 @@ namespace Paint.UI
             if (dialogResult == DialogResult.OK)
             {
                 pen.Color = colorDialog.Color;
+                brush.Color = pen.Color;
                 btnColor.BackColor = pen.Color;
             }
         }
-
-        private SaveFileDialog saveFileDialog = new SaveFileDialog();
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -322,6 +390,32 @@ namespace Paint.UI
             Point point = set_Point(pic, e.Location);
             Color color = ((Bitmap)pic.Image).GetPixel(point.X, point.Y);
             pen.Color = color;
+            brush.Color = color;
         }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            if(openFileDialog.ShowDialog()==DialogResult.OK)
+            {
+                try
+                {
+                    graphic.Clear(backGroundColor);
+
+                    Bitmap openBitmap = new Bitmap(openFileDialog.FileName);
+
+                    //  graphic = Graphics.FromImage(openBitmap);
+                    graphic.DrawImage(openBitmap, new Point(0, 0));
+                    picBoard.Refresh();
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                }
+               
+            }
+        }
+
+       
     }
 }

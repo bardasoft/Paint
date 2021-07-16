@@ -23,6 +23,7 @@ namespace Paint.Common
             double deltaY = Math.Pow(point2.Y - point1.Y, 2);
             return Math.Sqrt(deltaX + deltaY);
         }
+       
         internal static Rectangle GetRectangleByPoint(Point point1, Point point2)
         {
             int minPointX = Math.Min(point1.X, point2.X);

@@ -29,10 +29,11 @@ namespace Paint.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPaint));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.picBoard = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picColor = new System.Windows.Forms.PictureBox();
             this.cbxSize = new System.Windows.Forms.ComboBox();
             this.btnFree = new System.Windows.Forms.Button();
             this.btnLine = new System.Windows.Forms.Button();
@@ -56,7 +57,7 @@ namespace Paint.UI
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoard)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picColor)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,7 +74,7 @@ namespace Paint.UI
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 132F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1104, 600);
             this.tableLayoutPanel1.TabIndex = 0;
@@ -81,9 +82,9 @@ namespace Paint.UI
             // picBoard
             // 
             this.picBoard.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picBoard.Location = new System.Drawing.Point(3, 83);
+            this.picBoard.Location = new System.Drawing.Point(3, 155);
             this.picBoard.Name = "picBoard";
-            this.picBoard.Size = new System.Drawing.Size(1098, 514);
+            this.picBoard.Size = new System.Drawing.Size(1098, 442);
             this.picBoard.TabIndex = 1;
             this.picBoard.TabStop = false;
             this.picBoard.SizeChanged += new System.EventHandler(this.picBoard_SizeChanged);
@@ -95,7 +96,7 @@ namespace Paint.UI
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.pictureBox1);
+            this.flowLayoutPanel1.Controls.Add(this.picColor);
             this.flowLayoutPanel1.Controls.Add(this.cbxSize);
             this.flowLayoutPanel1.Controls.Add(this.btnFree);
             this.flowLayoutPanel1.Controls.Add(this.btnLine);
@@ -112,16 +113,19 @@ namespace Paint.UI
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 23);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1098, 54);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1098, 126);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // pictureBox1
+            // picColor
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(274, 51);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.picColor.Image = global::Paint.Resources.Resource.ColorChart;
+            this.picColor.Location = new System.Drawing.Point(3, 3);
+            this.picColor.Name = "picColor";
+            this.picColor.Size = new System.Drawing.Size(218, 64);
+            this.picColor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picColor.TabIndex = 1;
+            this.picColor.TabStop = false;
+            this.picColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picColor_MouseClick);
             // 
             // cbxSize
             // 
@@ -137,7 +141,7 @@ namespace Paint.UI
             "8",
             "9",
             "10"});
-            this.cbxSize.Location = new System.Drawing.Point(283, 3);
+            this.cbxSize.Location = new System.Drawing.Point(227, 3);
             this.cbxSize.Name = "cbxSize";
             this.cbxSize.Size = new System.Drawing.Size(103, 23);
             this.cbxSize.TabIndex = 2;
@@ -150,7 +154,7 @@ namespace Paint.UI
             this.btnFree.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
             this.btnFree.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
             this.btnFree.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFree.Location = new System.Drawing.Point(392, 3);
+            this.btnFree.Location = new System.Drawing.Point(336, 3);
             this.btnFree.Name = "btnFree";
             this.btnFree.Size = new System.Drawing.Size(48, 48);
             this.btnFree.TabIndex = 0;
@@ -164,7 +168,7 @@ namespace Paint.UI
             this.btnLine.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
             this.btnLine.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
             this.btnLine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLine.Location = new System.Drawing.Point(446, 3);
+            this.btnLine.Location = new System.Drawing.Point(390, 3);
             this.btnLine.Name = "btnLine";
             this.btnLine.Size = new System.Drawing.Size(48, 48);
             this.btnLine.TabIndex = 0;
@@ -174,7 +178,7 @@ namespace Paint.UI
             // 
             // btnRectangle
             // 
-            this.btnRectangle.Location = new System.Drawing.Point(500, 3);
+            this.btnRectangle.Location = new System.Drawing.Point(444, 3);
             this.btnRectangle.Name = "btnRectangle";
             this.btnRectangle.Size = new System.Drawing.Size(48, 48);
             this.btnRectangle.TabIndex = 0;
@@ -184,7 +188,7 @@ namespace Paint.UI
             // 
             // btnElip
             // 
-            this.btnElip.Location = new System.Drawing.Point(554, 3);
+            this.btnElip.Location = new System.Drawing.Point(498, 3);
             this.btnElip.Name = "btnElip";
             this.btnElip.Size = new System.Drawing.Size(48, 48);
             this.btnElip.TabIndex = 0;
@@ -194,7 +198,7 @@ namespace Paint.UI
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(608, 3);
+            this.button6.Location = new System.Drawing.Point(552, 3);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(48, 48);
             this.button6.TabIndex = 0;
@@ -203,7 +207,7 @@ namespace Paint.UI
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(662, 3);
+            this.button7.Location = new System.Drawing.Point(606, 3);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(48, 48);
             this.button7.TabIndex = 0;
@@ -212,7 +216,7 @@ namespace Paint.UI
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(716, 3);
+            this.button8.Location = new System.Drawing.Point(660, 3);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(48, 48);
             this.button8.TabIndex = 0;
@@ -221,7 +225,7 @@ namespace Paint.UI
             // 
             // btnFill
             // 
-            this.btnFill.Location = new System.Drawing.Point(770, 3);
+            this.btnFill.Location = new System.Drawing.Point(714, 3);
             this.btnFill.Name = "btnFill";
             this.btnFill.Size = new System.Drawing.Size(48, 48);
             this.btnFill.TabIndex = 0;
@@ -231,7 +235,8 @@ namespace Paint.UI
             // 
             // btnColor
             // 
-            this.btnColor.Location = new System.Drawing.Point(824, 3);
+            this.btnColor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnColor.BackgroundImage")));
+            this.btnColor.Location = new System.Drawing.Point(768, 3);
             this.btnColor.Name = "btnColor";
             this.btnColor.Size = new System.Drawing.Size(48, 48);
             this.btnColor.TabIndex = 0;
@@ -241,7 +246,7 @@ namespace Paint.UI
             // 
             // btnErase
             // 
-            this.btnErase.Location = new System.Drawing.Point(878, 3);
+            this.btnErase.Location = new System.Drawing.Point(822, 3);
             this.btnErase.Name = "btnErase";
             this.btnErase.Size = new System.Drawing.Size(48, 48);
             this.btnErase.TabIndex = 0;
@@ -251,7 +256,7 @@ namespace Paint.UI
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(932, 3);
+            this.btnClear.Location = new System.Drawing.Point(876, 3);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(48, 24);
             this.btnClear.TabIndex = 0;
@@ -261,7 +266,7 @@ namespace Paint.UI
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(986, 3);
+            this.btnSave.Location = new System.Drawing.Point(930, 3);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(48, 24);
             this.btnSave.TabIndex = 0;
@@ -335,7 +340,7 @@ namespace Paint.UI
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoard)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picColor)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -367,7 +372,7 @@ namespace Paint.UI
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picColor;
         private System.Windows.Forms.ComboBox cbxSize;
     }
 }

@@ -97,6 +97,7 @@ namespace Paint.UI
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.picColor);
+            this.flowLayoutPanel1.Controls.Add(this.btnColor);
             this.flowLayoutPanel1.Controls.Add(this.cbxSize);
             this.flowLayoutPanel1.Controls.Add(this.btnFree);
             this.flowLayoutPanel1.Controls.Add(this.btnLine);
@@ -106,7 +107,6 @@ namespace Paint.UI
             this.flowLayoutPanel1.Controls.Add(this.button7);
             this.flowLayoutPanel1.Controls.Add(this.button8);
             this.flowLayoutPanel1.Controls.Add(this.btnFill);
-            this.flowLayoutPanel1.Controls.Add(this.btnColor);
             this.flowLayoutPanel1.Controls.Add(this.btnErase);
             this.flowLayoutPanel1.Controls.Add(this.btnClear);
             this.flowLayoutPanel1.Controls.Add(this.btnSave);
@@ -141,7 +141,7 @@ namespace Paint.UI
             "8",
             "9",
             "10"});
-            this.cbxSize.Location = new System.Drawing.Point(227, 3);
+            this.cbxSize.Location = new System.Drawing.Point(281, 3);
             this.cbxSize.Name = "cbxSize";
             this.cbxSize.Size = new System.Drawing.Size(103, 23);
             this.cbxSize.TabIndex = 2;
@@ -154,7 +154,7 @@ namespace Paint.UI
             this.btnFree.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
             this.btnFree.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
             this.btnFree.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFree.Location = new System.Drawing.Point(336, 3);
+            this.btnFree.Location = new System.Drawing.Point(390, 3);
             this.btnFree.Name = "btnFree";
             this.btnFree.Size = new System.Drawing.Size(48, 48);
             this.btnFree.TabIndex = 0;
@@ -168,7 +168,7 @@ namespace Paint.UI
             this.btnLine.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
             this.btnLine.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
             this.btnLine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLine.Location = new System.Drawing.Point(390, 3);
+            this.btnLine.Location = new System.Drawing.Point(444, 3);
             this.btnLine.Name = "btnLine";
             this.btnLine.Size = new System.Drawing.Size(48, 48);
             this.btnLine.TabIndex = 0;
@@ -178,7 +178,7 @@ namespace Paint.UI
             // 
             // btnRectangle
             // 
-            this.btnRectangle.Location = new System.Drawing.Point(444, 3);
+            this.btnRectangle.Location = new System.Drawing.Point(498, 3);
             this.btnRectangle.Name = "btnRectangle";
             this.btnRectangle.Size = new System.Drawing.Size(48, 48);
             this.btnRectangle.TabIndex = 0;
@@ -188,7 +188,7 @@ namespace Paint.UI
             // 
             // btnElip
             // 
-            this.btnElip.Location = new System.Drawing.Point(498, 3);
+            this.btnElip.Location = new System.Drawing.Point(552, 3);
             this.btnElip.Name = "btnElip";
             this.btnElip.Size = new System.Drawing.Size(48, 48);
             this.btnElip.TabIndex = 0;
@@ -198,7 +198,7 @@ namespace Paint.UI
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(552, 3);
+            this.button6.Location = new System.Drawing.Point(606, 3);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(48, 48);
             this.button6.TabIndex = 0;
@@ -207,7 +207,7 @@ namespace Paint.UI
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(606, 3);
+            this.button7.Location = new System.Drawing.Point(660, 3);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(48, 48);
             this.button7.TabIndex = 0;
@@ -216,7 +216,7 @@ namespace Paint.UI
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(660, 3);
+            this.button8.Location = new System.Drawing.Point(714, 3);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(48, 48);
             this.button8.TabIndex = 0;
@@ -225,7 +225,7 @@ namespace Paint.UI
             // 
             // btnFill
             // 
-            this.btnFill.Location = new System.Drawing.Point(714, 3);
+            this.btnFill.Location = new System.Drawing.Point(768, 3);
             this.btnFill.Name = "btnFill";
             this.btnFill.Size = new System.Drawing.Size(48, 48);
             this.btnFill.TabIndex = 0;
@@ -236,7 +236,7 @@ namespace Paint.UI
             // btnColor
             // 
             this.btnColor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnColor.BackgroundImage")));
-            this.btnColor.Location = new System.Drawing.Point(768, 3);
+            this.btnColor.Location = new System.Drawing.Point(227, 3);
             this.btnColor.Name = "btnColor";
             this.btnColor.Size = new System.Drawing.Size(48, 48);
             this.btnColor.TabIndex = 0;

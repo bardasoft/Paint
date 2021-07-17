@@ -9,6 +9,7 @@ namespace Paint.Data
     internal enum Shape
     {
         None,
+        Point,
         Erase,
         Free,
         Line,

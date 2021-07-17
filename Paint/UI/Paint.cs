@@ -28,33 +28,47 @@ namespace Paint.UI
         private Pen erase;
         private float widthErase = 20;
         private SolidBrush brush;
+        bool isFill;
         private Shape shape;
-
-        Color backGroundColor;
+        private Shape temporaryShape;
+        Color foreColor;
+        Color backgroundColor;
+        Color backgroundSystemColor;
 
         OpenFileDialog openFileDialog;
         private SaveFileDialog saveFileDialog;
+        ColorDialog colorDialog;
         private string fileFommat = ".png";
         public frmPaint()
         {
             InitializeComponent();
+           
+        }
+        private void frmPaint_Load(object sender, EventArgs e)
+        {
+            isFill = false;
             openFileDialog = new OpenFileDialog()
             { };
             saveFileDialog = new SaveFileDialog();
+            colorDialog =  new ColorDialog();
             paint = false;
-            Color penColor = Color.Black;
-           backGroundColor =  Color.White;
+            foreColor = Color.Black;
+            backgroundSystemColor = Color.White;
             bitmap = new Bitmap(picBoard.Width, picBoard.Height);
-        
+
             graphic = Graphics.FromImage(bitmap);
             graphic.SmoothingMode = SmoothingMode.HighQuality;
-            graphic.Clear(backGroundColor);
+            graphic.InterpolationMode = InterpolationMode.High;
+
+
+            graphic.Clear(backgroundSystemColor);
             picBoard.Image = bitmap;
 
-            pen = new Pen(penColor, float.Parse(cbxSize.Text));
-            erase = new Pen(backGroundColor, widthErase);
-            brush = new SolidBrush(penColor);
-            btnColor.BackColor = penColor;
+            pen = new Pen(foreColor, float.Parse(cbxSize.Text));
+            pen.LineJoin = LineJoin.Round;
+            erase = new Pen(backgroundSystemColor, widthErase);
+            brush = new SolidBrush(foreColor);
+            btnForeColor.BackColor = foreColor;
         }
 
         private void picBoard_MouseDown(object sender, MouseEventArgs e)
@@ -142,22 +156,7 @@ namespace Paint.UI
 
             picBoard.Refresh();//call paint
         }
-        private void btnNone_Click(object sender, EventArgs e)
-        {
-            shape = Shape.None;
-            tssPrompt.Text = string.Empty;
-
-        }
-        private void btnLine_Click(object sender, EventArgs e)
-        {
-            shape = Shape.Line;
-        }
-
-        private void btnFree_Click(object sender, EventArgs e)
-        {
-            shape = Shape.Free;
-            //    picBoard.Cursor = new Cursor();
-        }
+       
 
         private void picBoard_Paint(object sender, PaintEventArgs e)
         {
@@ -199,7 +198,16 @@ namespace Paint.UI
 
                 case Shape.Rectangle:
                     Rectangle rectangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
-                    graphic.DrawRectangle(pen, rectangle);
+                    if(isFill)
+                    {
+                        graphic.FillRectangle(brush, rectangle);
+                        
+                    }
+                    else
+                    {
+                        graphic.DrawRectangle(pen, rectangle);
+                    }
+                   
                     break;
 
                 case Shape.Square:
@@ -207,7 +215,16 @@ namespace Paint.UI
 
                 case Shape.Ellipse:
                     Rectangle rectangleElip = Utilities.GetRectangleByPoint(startPoint, endPoint);
-                    graphic.DrawEllipse(pen, rectangleElip);
+                    if (isFill)
+                    {
+                        graphic.FillEllipse(brush, rectangleElip);
+
+                    }
+                    else
+                    {
+                        graphic.DrawEllipse(pen, rectangleElip);
+                    }
+                  
                     break;
 
                 case Shape.Circle:
@@ -217,7 +234,15 @@ namespace Paint.UI
                         Point center = startPoint;
                         int radius = (int)Utilities.DistanceTwoPoints(startPoint, endPoint);
                         Rectangle rect = new Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2);
-                        graphic.DrawEllipse(pen, rect);
+                        if(isFill)
+                        {
+                            graphic.FillEllipse(brush, rect);
+                        }
+                        else
+                        {
+                            graphic.DrawEllipse(pen, rect);
+                        }
+                      
                     }
                    
                     break;
@@ -289,11 +314,30 @@ namespace Paint.UI
 
         //}
 
+        private void btnNone_Click(object sender, EventArgs e)
+        {
+            shape = Shape.None;
+            tssPrompt.Text = string.Empty;
+          
+        }
+        private void btnLine_Click(object sender, EventArgs e)
+        {
+            shape = Shape.Line;
+            tssPrompt.Text = "Pick and hold 2 points";
+        }
 
+        private void btnFree_Click(object sender, EventArgs e)
+        {
+            shape = Shape.Free;
+            //    picBoard.Cursor = new Cursor();
+            tssPrompt.Text = "Hold your mouse";
+        }
         private void btnErase_Click(object sender, EventArgs e)
         {
             shape = Shape.Erase;
             //  picBoard.Cursor = new Cursor(@"D:\Libraries\Icons\eraser.ico");
+            tssPrompt.Text = "Hold your mouse";
+
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -305,38 +349,55 @@ namespace Paint.UI
         private void btnRectangle_Click(object sender, EventArgs e)
         {
             shape = Shape.Rectangle;
+            tssPrompt.Text = "Pick and hold 2 points";
+
         }
 
         private void btnEllipse_Click(object sender, EventArgs e)
         {
             shape = Shape.Ellipse;
+            tssPrompt.Text = "Pick and hold 2 points";
         }
         private void btnCircle_Click(object sender, EventArgs e)
         {
             shape = Shape.Circle;
+            tssPrompt.Text = "Pick a center point and hold your mouse to set radius";
         }
         private void btnText_Click(object sender, EventArgs e)
         {
             shape = Shape.Text;
-            tssPrompt.Text = "Pick a point";
+            tssPrompt.Text = "Pick a point to place text";
         }
         private void btnFill_Click(object sender, EventArgs e)
         {
             shape = Shape.Fill;
+            tssPrompt.Text = "Pick a point to fill an are";
         }
 
-        private void btnColor_Click(object sender, EventArgs e)
+        private void btnForeColor_Click(object sender, EventArgs e)
         {
-            ColorDialog colorDialog = new ColorDialog();
+           
             DialogResult dialogResult = colorDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
-                pen.Color = colorDialog.Color;
-                brush.Color = pen.Color;
-                btnColor.BackColor = pen.Color;
+                foreColor = colorDialog.Color;
+                pen.Color = foreColor;
+                brush.Color = foreColor;
+                btnForeColor.BackColor = foreColor;
             }
         }
-
+        private void btnBackgroundColor_Click(object sender, EventArgs e)
+        {
+            
+            DialogResult dialogResult = colorDialog.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                backgroundColor = colorDialog.Color;
+                //pen.Color = foreColor;
+                //brush.Color = foreColor;
+                //btnForeColor.BackColor = foreColor;
+            }
+        }
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -412,6 +473,17 @@ namespace Paint.UI
                     picBoard.Refresh();
                 }
             }
+            else if(shape ==Shape.Point)
+            {
+                Point point = set_Point(picBoard, e.Location);
+                foreColor = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
+                pen.Color = foreColor;
+                brush.Color = foreColor;
+                btnForeColor.BackColor = foreColor;
+                shape = temporaryShape;
+               
+            }
+
         }
 
         private void picColor_MouseClick(object sender, MouseEventArgs e)
@@ -421,7 +493,8 @@ namespace Paint.UI
             Color color = ((Bitmap)pic.Image).GetPixel(point.X, point.Y);
             pen.Color = color;
             brush.Color = color;
-            btnColor.BackColor = color;
+            btnForeColor.BackColor = color;
+          
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -430,7 +503,7 @@ namespace Paint.UI
             {
                 try
                 {
-                    graphic.Clear(backGroundColor);
+                    graphic.Clear(backgroundSystemColor);
 
                     Bitmap openBitmap = new Bitmap(openFileDialog.FileName);
 
@@ -447,6 +520,16 @@ namespace Paint.UI
             }
         }
 
-       
+        private void btnColorPicker_Click(object sender, EventArgs e)
+        {
+            temporaryShape = shape;
+            shape = Shape.Point;
+            tssPrompt.Text = "Pick a point to get corlor";
+        }
+
+        private void chkFill_CheckedChanged(object sender, EventArgs e)
+        {
+            isFill = chkFill.Checked;
+        }
     }
 }

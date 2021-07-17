@@ -515,7 +515,7 @@ namespace Paint.UI
 
                     MessageBox.Show(ex.Message);
                 }
-               
+                btnNone_Click(sender, e);
             }
         }
 

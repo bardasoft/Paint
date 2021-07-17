@@ -45,6 +45,7 @@ namespace Paint.UI
             Color penColor = Color.Black;
            backGroundColor =  Color.White;
             bitmap = new Bitmap(picBoard.Width, picBoard.Height);
+        
             graphic = Graphics.FromImage(bitmap);
             graphic.SmoothingMode = SmoothingMode.HighQuality;
             graphic.Clear(backGroundColor);
@@ -72,7 +73,6 @@ namespace Paint.UI
                 switch (shape)
                 {
                     case Shape.None:
-                        tssPrompt.Text = string.Empty;
                         break;
 
                     case Shape.Free:
@@ -123,7 +123,7 @@ namespace Paint.UI
         private void picBoard_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
-
+            endPoint = e.Location;
             Paint(graphic, shape);
 
             switch (shape)
@@ -145,6 +145,8 @@ namespace Paint.UI
         private void btnNone_Click(object sender, EventArgs e)
         {
             shape = Shape.None;
+            tssPrompt.Text = string.Empty;
+
         }
         private void btnLine_Click(object sender, EventArgs e)
         {
@@ -162,10 +164,18 @@ namespace Paint.UI
             var paintGraphic = e.Graphics;
 
             Paint(paintGraphic, shape);
+
+
+
+
+           // TextFormatFlags flags = TextFormatFlags.Bottom | TextFormatFlags.EndEllipsis;
+            //TextRenderer.DrawText(e.Graphics, "This is some text that will be clipped at the end.", this.Font,
+              //  new Rectangle(10, 10, 300, 50), SystemColors.ControlText/*, flags*/);
         }
 
         private new void Paint(Graphics graphic, Shape shape)
         {
+
             switch (shape)
             {
                 case Shape.None:
@@ -201,10 +211,15 @@ namespace Paint.UI
                     break;
 
                 case Shape.Circle:
-                    Point center = startPoint;
-                    int radius = (int)Utilities.DistanceTwoPoints(startPoint, endPoint);
-                    Rectangle rect = new Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2);
-                    graphic.DrawEllipse(pen, rect);
+                   // MessageBox.Show(startPoint+ endPoint.ToString());
+                    if(startPoint!= endPoint)
+                    {
+                        Point center = startPoint;
+                        int radius = (int)Utilities.DistanceTwoPoints(startPoint, endPoint);
+                        Rectangle rect = new Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2);
+                        graphic.DrawEllipse(pen, rect);
+                    }
+                   
                     break;
 
                 case Shape.Triangle:
@@ -229,35 +244,50 @@ namespace Paint.UI
 
         private void picBoard_SizeChanged(object sender, EventArgs e)
         {
+          // var newbitmap = (Bitmap)picBoard.Image;
 
-            
-           // graphic = Graphics.FromImage(bitmap);
+            //  bitmap = new Bitmap(picBoard.Width,picBoard.Height);
+            // graphic = Graphics.FromImage(result);
+            // graphic.Clear(backGroundColor);
+            //graphic = Graphics.FromImage(newbitmap);
+         //  graphic.DrawImage(newbitmap, 0,0);
+          //  picBoard.Image = newbitmap;
+           // picBoard.Image = bitmap;
             //graphic.Clear(Color.White);
-            picBoard.Image = bitmap;
-            XX(this.Width, picBoard.Height);
-        }
 
-        void XX(float width, float height)
+
+        }
+        public Bitmap ResizeBitmap(Bitmap bmp, int width, int height)
         {
-           
-            //var brush = new SolidBrush(Color.Black);
-            //var image = new Bitmap(picBoard.Image);
-            //float scale = Math.Min(width / image.Width, height / image.Height);
-            //var bmp = new Bitmap((int)width, (int)height);
-            //var graph = Graphics.FromImage(bmp);
-          
-            //// uncomment for higher quality output
-            ////graph.InterpolationMode = InterpolationMode.High;
-            ////graph.CompositingQuality = CompositingQuality.HighQuality;
-            ////graph.SmoothingMode = SmoothingMode.AntiAlias;
+            Bitmap result = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                g.DrawImage(bmp, 0, 0, width, height);
+            }
 
-            //var scaleWidth = (int)(image.Width * scale);
-            //var scaleHeight = (int)(image.Height * scale);
-
-            //graph.FillRectangle(brush, new RectangleF(0, 0, width, height));
-            //graph.DrawImage(image, ((int)width - scaleWidth) / 2, ((int)height - scaleHeight) / 2, scaleWidth, scaleHeight);
-            
+            return result;
         }
+        //void XX(float width, float height)
+        //{
+
+        //    var brush = new SolidBrush(Color.Black);
+        //    var image = new Bitmap(picBoard.Image);
+        //    float scale = Math.Min(width / image.Width, height / image.Height);
+        //    var bmp = new Bitmap((int)width, (int)height);
+        //    var graph = Graphics.FromImage(bmp);
+
+        //    // uncomment for higher quality output
+        //    //graph.InterpolationMode = InterpolationMode.High;
+        //    //graph.CompositingQuality = CompositingQuality.HighQuality;
+        //    //graph.SmoothingMode = SmoothingMode.AntiAlias;
+
+        //    var scaleWidth = (int)(image.Width * scale);
+        //    var scaleHeight = (int)(image.Height * scale);
+
+        //    graph.FillRectangle(brush, new RectangleF(0, 0, width, height));
+        //    graph.DrawImage(image, ((int)width - scaleWidth) / 2, ((int)height - scaleHeight) / 2, scaleWidth, scaleHeight);
+
+        //}
 
 
         private void btnErase_Click(object sender, EventArgs e)
@@ -391,6 +421,7 @@ namespace Paint.UI
             Color color = ((Bitmap)pic.Image).GetPixel(point.X, point.Y);
             pen.Color = color;
             brush.Color = color;
+            btnColor.BackColor = color;
         }
 
         private void btnOpen_Click(object sender, EventArgs e)

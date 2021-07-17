@@ -218,7 +218,6 @@ namespace Paint.UI
                     if (isFill)
                     {
                         graphic.FillEllipse(brush, rectangleElip);
-
                     }
                     else
                     {

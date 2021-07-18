@@ -42,6 +42,7 @@ namespace Paint.UI
             this.txtInputText.Multiline = true;
             this.txtInputText.Name = "txtInputText";
             this.txtInputText.PlaceholderText = "Enter text here";
+            this.txtInputText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtInputText.Size = new System.Drawing.Size(356, 156);
             this.txtInputText.TabIndex = 1;
             // 

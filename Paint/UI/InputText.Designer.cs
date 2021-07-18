@@ -42,13 +42,13 @@ namespace Paint.UI
             this.txtInputText.Multiline = true;
             this.txtInputText.Name = "txtInputText";
             this.txtInputText.PlaceholderText = "Enter text here";
-            this.txtInputText.Size = new System.Drawing.Size(360, 161);
+            this.txtInputText.Size = new System.Drawing.Size(356, 156);
             this.txtInputText.TabIndex = 1;
             // 
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(284, 164);
+            this.btnOK.Location = new System.Drawing.Point(280, 159);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
@@ -58,15 +58,15 @@ namespace Paint.UI
             // 
             // InputText
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnOK;
-            this.ClientSize = new System.Drawing.Size(358, 186);
+            this.ClientSize = new System.Drawing.Size(354, 181);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtInputText);
             this.Name = "InputText";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "InputText";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "Input Text";
             this.ResumeLayout(false);
             this.PerformLayout();
 

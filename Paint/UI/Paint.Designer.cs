@@ -39,7 +39,6 @@ namespace Paint.UI
             this.btnSave = new System.Windows.Forms.Button();
             this.btnErase = new System.Windows.Forms.Button();
             this.btnFill = new System.Windows.Forms.Button();
-            this.btnText = new System.Windows.Forms.Button();
             this.btnBackgroundColor = new System.Windows.Forms.Button();
             this.btnForeColor = new System.Windows.Forms.Button();
             this.picColor = new System.Windows.Forms.PictureBox();
@@ -53,8 +52,10 @@ namespace Paint.UI
             this.btnLine = new System.Windows.Forms.Button();
             this.btnFree = new System.Windows.Forms.Button();
             this.btnNone = new System.Windows.Forms.Button();
+            this.btnText = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSplitButton2 = new System.Windows.Forms.ToolStripSplitButton();
             this.tssPrompt = new System.Windows.Forms.ToolStripStatusLabel();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -134,7 +135,6 @@ namespace Paint.UI
             this.tableLayoutPanel2.Controls.Add(this.btnSave, 14, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnErase, 13, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnFill, 12, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnText, 5, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnBackgroundColor, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnForeColor, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.picColor, 0, 0);
@@ -144,7 +144,8 @@ namespace Paint.UI
             this.tableLayoutPanel2.Controls.Add(this.btnRectangle, 9, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnLine, 8, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnFree, 7, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnNone, 6, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnNone, 5, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnText, 6, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
@@ -164,7 +165,7 @@ namespace Paint.UI
             this.btnColorPicker.Margin = new System.Windows.Forms.Padding(0);
             this.btnColorPicker.Name = "btnColorPicker";
             this.btnColorPicker.Size = new System.Drawing.Size(48, 48);
-            this.btnColorPicker.TabIndex = 0;
+            this.btnColorPicker.TabIndex = 10;
             this.btnColorPicker.Text = "Color\r\nPicker";
             this.btnColorPicker.UseVisualStyleBackColor = true;
             this.btnColorPicker.Click += new System.EventHandler(this.btnColorPicker_Click);
@@ -175,7 +176,7 @@ namespace Paint.UI
             this.btnClear.Margin = new System.Windows.Forms.Padding(0);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(46, 24);
-            this.btnClear.TabIndex = 0;
+            this.btnClear.TabIndex = 13;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -186,7 +187,7 @@ namespace Paint.UI
             this.btnOpen.Margin = new System.Windows.Forms.Padding(0);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(46, 24);
-            this.btnOpen.TabIndex = 0;
+            this.btnOpen.TabIndex = 12;
             this.btnOpen.Text = "Open";
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
@@ -197,7 +198,7 @@ namespace Paint.UI
             this.btnSave.Margin = new System.Windows.Forms.Padding(0);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(46, 24);
-            this.btnSave.TabIndex = 0;
+            this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -212,7 +213,7 @@ namespace Paint.UI
             this.btnErase.Margin = new System.Windows.Forms.Padding(0);
             this.btnErase.Name = "btnErase";
             this.btnErase.Size = new System.Drawing.Size(46, 48);
-            this.btnErase.TabIndex = 0;
+            this.btnErase.TabIndex = 7;
             this.btnErase.Text = "Erase";
             this.btnErase.UseVisualStyleBackColor = true;
             this.btnErase.Click += new System.EventHandler(this.btnErase_Click);
@@ -232,21 +233,6 @@ namespace Paint.UI
             this.btnFill.UseVisualStyleBackColor = true;
             this.btnFill.Click += new System.EventHandler(this.btnFill_Click);
             // 
-            // btnText
-            // 
-            this.btnText.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnText.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
-            this.btnText.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnText.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnText.Location = new System.Drawing.Point(468, 0);
-            this.btnText.Margin = new System.Windows.Forms.Padding(0);
-            this.btnText.Name = "btnText";
-            this.btnText.Size = new System.Drawing.Size(46, 48);
-            this.btnText.TabIndex = 0;
-            this.btnText.Text = "Text";
-            this.btnText.UseVisualStyleBackColor = true;
-            this.btnText.Click += new System.EventHandler(this.btnText_Click);
-            // 
             // btnBackgroundColor
             // 
             this.btnBackgroundColor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBackgroundColor.BackgroundImage")));
@@ -258,7 +244,7 @@ namespace Paint.UI
             this.btnBackgroundColor.Margin = new System.Windows.Forms.Padding(0);
             this.btnBackgroundColor.Name = "btnBackgroundColor";
             this.btnBackgroundColor.Size = new System.Drawing.Size(46, 48);
-            this.btnBackgroundColor.TabIndex = 0;
+            this.btnBackgroundColor.TabIndex = 9;
             this.btnBackgroundColor.Text = "Background\r\nColor";
             this.btnBackgroundColor.UseVisualStyleBackColor = true;
             this.btnBackgroundColor.Click += new System.EventHandler(this.btnBackgroundColor_Click);
@@ -274,7 +260,7 @@ namespace Paint.UI
             this.btnForeColor.Margin = new System.Windows.Forms.Padding(0);
             this.btnForeColor.Name = "btnForeColor";
             this.btnForeColor.Size = new System.Drawing.Size(46, 48);
-            this.btnForeColor.TabIndex = 0;
+            this.btnForeColor.TabIndex = 8;
             this.btnForeColor.Text = "Fore Color";
             this.btnForeColor.UseVisualStyleBackColor = true;
             this.btnForeColor.Click += new System.EventHandler(this.btnForeColor_Click);
@@ -366,7 +352,7 @@ namespace Paint.UI
             this.btnCircle.Margin = new System.Windows.Forms.Padding(0);
             this.btnCircle.Name = "btnCircle";
             this.btnCircle.Size = new System.Drawing.Size(46, 48);
-            this.btnCircle.TabIndex = 0;
+            this.btnCircle.TabIndex = 6;
             this.btnCircle.Text = "Circle";
             this.btnCircle.UseVisualStyleBackColor = true;
             this.btnCircle.Click += new System.EventHandler(this.btnCircle_Click);
@@ -381,7 +367,7 @@ namespace Paint.UI
             this.btnEllipse.Margin = new System.Windows.Forms.Padding(0);
             this.btnEllipse.Name = "btnEllipse";
             this.btnEllipse.Size = new System.Drawing.Size(46, 48);
-            this.btnEllipse.TabIndex = 0;
+            this.btnEllipse.TabIndex = 5;
             this.btnEllipse.Text = "Ellipse";
             this.btnEllipse.UseVisualStyleBackColor = true;
             this.btnEllipse.Click += new System.EventHandler(this.btnEllipse_Click);
@@ -396,7 +382,7 @@ namespace Paint.UI
             this.btnRectangle.Margin = new System.Windows.Forms.Padding(0);
             this.btnRectangle.Name = "btnRectangle";
             this.btnRectangle.Size = new System.Drawing.Size(46, 48);
-            this.btnRectangle.TabIndex = 0;
+            this.btnRectangle.TabIndex = 4;
             this.btnRectangle.Text = "Rectangle";
             this.btnRectangle.UseVisualStyleBackColor = true;
             this.btnRectangle.Click += new System.EventHandler(this.btnRectangle_Click);
@@ -411,7 +397,7 @@ namespace Paint.UI
             this.btnLine.Margin = new System.Windows.Forms.Padding(0);
             this.btnLine.Name = "btnLine";
             this.btnLine.Size = new System.Drawing.Size(46, 48);
-            this.btnLine.TabIndex = 0;
+            this.btnLine.TabIndex = 3;
             this.btnLine.Text = "Line";
             this.btnLine.UseVisualStyleBackColor = true;
             this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
@@ -426,7 +412,7 @@ namespace Paint.UI
             this.btnFree.Margin = new System.Windows.Forms.Padding(0);
             this.btnFree.Name = "btnFree";
             this.btnFree.Size = new System.Drawing.Size(46, 48);
-            this.btnFree.TabIndex = 0;
+            this.btnFree.TabIndex = 2;
             this.btnFree.Text = "Free";
             this.btnFree.UseVisualStyleBackColor = true;
             this.btnFree.Click += new System.EventHandler(this.btnFree_Click);
@@ -437,7 +423,7 @@ namespace Paint.UI
             this.btnNone.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
             this.btnNone.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnNone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNone.Location = new System.Drawing.Point(516, 0);
+            this.btnNone.Location = new System.Drawing.Point(468, 0);
             this.btnNone.Margin = new System.Windows.Forms.Padding(0);
             this.btnNone.Name = "btnNone";
             this.btnNone.Size = new System.Drawing.Size(46, 48);
@@ -446,10 +432,26 @@ namespace Paint.UI
             this.btnNone.UseVisualStyleBackColor = true;
             this.btnNone.Click += new System.EventHandler(this.btnNone_Click);
             // 
+            // btnText
+            // 
+            this.btnText.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnText.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
+            this.btnText.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnText.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnText.Location = new System.Drawing.Point(516, 0);
+            this.btnText.Margin = new System.Windows.Forms.Padding(0);
+            this.btnText.Name = "btnText";
+            this.btnText.Size = new System.Drawing.Size(46, 48);
+            this.btnText.TabIndex = 1;
+            this.btnText.Text = "Text";
+            this.btnText.UseVisualStyleBackColor = true;
+            this.btnText.Click += new System.EventHandler(this.btnText_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssCoordinate,
+            this.toolStripSplitButton2,
             this.tssPrompt});
             this.statusStrip1.Location = new System.Drawing.Point(0, 578);
             this.statusStrip1.Name = "statusStrip1";
@@ -463,6 +465,15 @@ namespace Paint.UI
             this.tssCoordinate.Name = "tssCoordinate";
             this.tssCoordinate.Size = new System.Drawing.Size(66, 22);
             this.tssCoordinate.Text = "Coordinate";
+            // 
+            // toolStripSplitButton2
+            // 
+            this.toolStripSplitButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSplitButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton2.Image")));
+            this.toolStripSplitButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton2.Name = "toolStripSplitButton2";
+            this.toolStripSplitButton2.Size = new System.Drawing.Size(26, 20);
+            this.toolStripSplitButton2.Text = "|";
             // 
             // tssPrompt
             // 
@@ -587,6 +598,7 @@ namespace Paint.UI
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.CheckBox chkFill;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton2;
     }
 }
 

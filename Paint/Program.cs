@@ -9,6 +9,7 @@ namespace Paint
 {
     static class Program
     {
+      internal  static string AppLocation;
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>

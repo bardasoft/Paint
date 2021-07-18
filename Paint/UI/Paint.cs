@@ -30,7 +30,9 @@ namespace Paint.UI
         private SolidBrush brush;
         bool isFill;
         private Shape shape;
-        private Shape temporaryShape;
+        private Shape previousShape;
+        private string previousPrompt;
+
         Color foreColor;
         Color backgroundColor;
         Color backgroundSystemColor;
@@ -42,15 +44,16 @@ namespace Paint.UI
         public frmPaint()
         {
             InitializeComponent();
-           
+
         }
         private void frmPaint_Load(object sender, EventArgs e)
         {
             isFill = false;
+            previousPrompt = string.Empty;
             openFileDialog = new OpenFileDialog()
             { };
             saveFileDialog = new SaveFileDialog();
-            colorDialog =  new ColorDialog();
+            colorDialog = new ColorDialog();
             paint = false;
             foreColor = Color.Black;
             backgroundSystemColor = Color.White;
@@ -69,6 +72,9 @@ namespace Paint.UI
             erase = new Pen(backgroundSystemColor, widthErase);
             brush = new SolidBrush(foreColor);
             btnForeColor.BackColor = foreColor;
+
+            btnNone.Select();
+
         }
 
         private void picBoard_MouseDown(object sender, MouseEventArgs e)
@@ -79,7 +85,7 @@ namespace Paint.UI
 
         private void picBoard_MouseMove(object sender, MouseEventArgs e)
         {
-            tssCoordinate.Text = $"{e.X} x {e.Y}";
+            tssCoordinate.Text = $"{e.X}, {e.Y}px";
             if (paint)
             {
                 endPoint = e.Location;
@@ -143,8 +149,22 @@ namespace Paint.UI
             switch (shape)
             {
                 case Shape.Text:
-
+                    Point eLocation = e.Location;
                     InputText inputText = new InputText();
+
+
+                    Size inputSize = inputText.Size;
+                    Point locationInputText = new Point(eLocation.X - 30, (int)(eLocation.Y + inputSize.Height / 2) - 50);
+                    if (eLocation.X + inputSize.Width > picBoard.Width)
+                    {
+                        locationInputText.X = picBoard.Width - inputSize.Width;
+                    }
+                    if (eLocation.Y + inputSize.Height > picBoard.Height)
+                    {
+                        locationInputText.Y = picBoard.Height - inputSize.Height+100;
+
+                    }
+                    inputText.Location = locationInputText;
                     if (inputText.ShowDialog() == DialogResult.OK)
                     {
                         graphic.DrawString(inputText.InputString, new Font("Arial", 12), brush, startPoint);
@@ -156,7 +176,7 @@ namespace Paint.UI
 
             picBoard.Refresh();//call paint
         }
-       
+
 
         private void picBoard_Paint(object sender, PaintEventArgs e)
         {
@@ -167,9 +187,9 @@ namespace Paint.UI
 
 
 
-           // TextFormatFlags flags = TextFormatFlags.Bottom | TextFormatFlags.EndEllipsis;
+            // TextFormatFlags flags = TextFormatFlags.Bottom | TextFormatFlags.EndEllipsis;
             //TextRenderer.DrawText(e.Graphics, "This is some text that will be clipped at the end.", this.Font,
-              //  new Rectangle(10, 10, 300, 50), SystemColors.ControlText/*, flags*/);
+            //  new Rectangle(10, 10, 300, 50), SystemColors.ControlText/*, flags*/);
         }
 
         private new void Paint(Graphics graphic, Shape shape)
@@ -198,16 +218,16 @@ namespace Paint.UI
 
                 case Shape.Rectangle:
                     Rectangle rectangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
-                    if(isFill)
+                    if (isFill)
                     {
                         graphic.FillRectangle(brush, rectangle);
-                        
+
                     }
                     else
                     {
                         graphic.DrawRectangle(pen, rectangle);
                     }
-                   
+
                     break;
 
                 case Shape.Square:
@@ -223,17 +243,17 @@ namespace Paint.UI
                     {
                         graphic.DrawEllipse(pen, rectangleElip);
                     }
-                  
+
                     break;
 
                 case Shape.Circle:
-                   // MessageBox.Show(startPoint+ endPoint.ToString());
-                    if(startPoint!= endPoint)
+                    // MessageBox.Show(startPoint+ endPoint.ToString());
+                    if (startPoint != endPoint)
                     {
                         Point center = startPoint;
                         int radius = (int)Utilities.DistanceTwoPoints(startPoint, endPoint);
                         Rectangle rect = new Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2);
-                        if(isFill)
+                        if (isFill)
                         {
                             graphic.FillEllipse(brush, rect);
                         }
@@ -241,9 +261,9 @@ namespace Paint.UI
                         {
                             graphic.DrawEllipse(pen, rect);
                         }
-                      
+
                     }
-                   
+
                     break;
 
                 case Shape.Triangle:
@@ -263,20 +283,20 @@ namespace Paint.UI
                 default:
                     break;
             }
-           
+
         }
 
         private void picBoard_SizeChanged(object sender, EventArgs e)
         {
-          // var newbitmap = (Bitmap)picBoard.Image;
+            // var newbitmap = (Bitmap)picBoard.Image;
 
             //  bitmap = new Bitmap(picBoard.Width,picBoard.Height);
             // graphic = Graphics.FromImage(result);
             // graphic.Clear(backGroundColor);
             //graphic = Graphics.FromImage(newbitmap);
-         //  graphic.DrawImage(newbitmap, 0,0);
-          //  picBoard.Image = newbitmap;
-           // picBoard.Image = bitmap;
+            //  graphic.DrawImage(newbitmap, 0,0);
+            //  picBoard.Image = newbitmap;
+            // picBoard.Image = bitmap;
             //graphic.Clear(Color.White);
 
 
@@ -317,7 +337,7 @@ namespace Paint.UI
         {
             shape = Shape.None;
             tssPrompt.Text = string.Empty;
-          
+
         }
         private void btnLine_Click(object sender, EventArgs e)
         {
@@ -375,7 +395,7 @@ namespace Paint.UI
 
         private void btnForeColor_Click(object sender, EventArgs e)
         {
-           
+
             DialogResult dialogResult = colorDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
@@ -387,7 +407,7 @@ namespace Paint.UI
         }
         private void btnBackgroundColor_Click(object sender, EventArgs e)
         {
-            
+
             DialogResult dialogResult = colorDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
@@ -472,15 +492,16 @@ namespace Paint.UI
                     picBoard.Refresh();
                 }
             }
-            else if(shape ==Shape.Point)
+            else if (shape == Shape.Point)
             {
                 Point point = set_Point(picBoard, e.Location);
                 foreColor = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
                 pen.Color = foreColor;
                 brush.Color = foreColor;
                 btnForeColor.BackColor = foreColor;
-                shape = temporaryShape;
-               
+                shape = previousShape;
+                tssPrompt.Text = previousPrompt;
+
             }
 
         }
@@ -493,12 +514,12 @@ namespace Paint.UI
             pen.Color = color;
             brush.Color = color;
             btnForeColor.BackColor = color;
-          
+
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            if(openFileDialog.ShowDialog()==DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
@@ -521,9 +542,12 @@ namespace Paint.UI
 
         private void btnColorPicker_Click(object sender, EventArgs e)
         {
-            temporaryShape = shape;
+            previousShape = shape;
+            previousPrompt = tssPrompt.Text;
             shape = Shape.Point;
             tssPrompt.Text = "Pick a point to get corlor";
+            // picBoard.Cursor= new Cursor(Resources.Resource.ResourceManager.GetString(Resources.Resource.DigitalPencil))
+
         }
 
         private void chkFill_CheckedChanged(object sender, EventArgs e)

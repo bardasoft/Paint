@@ -20,6 +20,8 @@ namespace Paint.Data
         Triangle,
         Petagon,
         Hecxagon,
+        Arrow,
+        DoubleArrow,
         Fill,
         Text,
     }

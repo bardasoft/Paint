@@ -96,11 +96,17 @@ namespace Paint.UI
                         break;
 
                     case Shape.Free:
+                        pen.LineJoin = LineJoin.Round;
+                        pen.StartCap = LineCap.Flat;
+                        pen.EndCap = LineCap.Flat;
                         graphic.DrawLine(pen, startPoint, endPoint);
                         startPoint = endPoint;
                         break;
 
                     case Shape.Erase:
+                        pen.LineJoin = LineJoin.Round;
+                        pen.StartCap = LineCap.Flat;
+                        pen.EndCap = LineCap.Flat;
                         graphic.DrawLine(erase, startPoint, endPoint);
                         startPoint = endPoint;
                         break;
@@ -211,7 +217,8 @@ namespace Paint.UI
                     break;
 
                 case Shape.Line:
-
+                    pen.StartCap = LineCap.Flat;
+                    pen.EndCap = LineCap.Flat;
                     graphic.DrawLine(pen, startPoint, endPoint);
 
                     break;
@@ -265,7 +272,17 @@ namespace Paint.UI
                     }
 
                     break;
+                case Shape.Arrow:
+                    pen.StartCap = LineCap.Flat;
+                    pen.EndCap = LineCap.ArrowAnchor;
+                    graphic.DrawLine(pen, startPoint, endPoint);
 
+                    break;
+                case Shape.DoubleArrow:
+                    pen.StartCap = LineCap.ArrowAnchor;
+                    pen.EndCap = LineCap.ArrowAnchor;
+                    graphic.DrawLine(pen, startPoint, endPoint);
+                    break;
                 case Shape.Triangle:
                     break;
 
@@ -392,7 +409,15 @@ namespace Paint.UI
             shape = Shape.Fill;
             tssPrompt.Text = "Pick a point to fill an are";
         }
+        private void btnArrow_Click(object sender, EventArgs e)
+        {
+            shape = Shape.Arrow;
+        }
 
+        private void btnDoubleArrow_Click(object sender, EventArgs e)
+        {
+            shape = Shape.DoubleArrow;
+        }
         private void btnForeColor_Click(object sender, EventArgs e)
         {
 
@@ -415,6 +440,32 @@ namespace Paint.UI
                 //pen.Color = foreColor;
                 //brush.Color = foreColor;
                 //btnForeColor.BackColor = foreColor;
+            }
+        }
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            btnClear_Click(sender, e);
+        }
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    graphic.Clear(backgroundSystemColor);
+
+                    Bitmap openBitmap = new Bitmap(openFileDialog.FileName);
+
+                    //  graphic = Graphics.FromImage(openBitmap);
+                    graphic.DrawImage(openBitmap, new Point(0, 0));
+                    picBoard.Refresh();
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                }
+                btnNone_Click(sender, e);
             }
         }
         private void btnSave_Click(object sender, EventArgs e)
@@ -517,28 +568,7 @@ namespace Paint.UI
 
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    graphic.Clear(backgroundSystemColor);
-
-                    Bitmap openBitmap = new Bitmap(openFileDialog.FileName);
-
-                    //  graphic = Graphics.FromImage(openBitmap);
-                    graphic.DrawImage(openBitmap, new Point(0, 0));
-                    picBoard.Refresh();
-                }
-                catch (Exception ex)
-                {
-
-                    MessageBox.Show(ex.Message);
-                }
-                btnNone_Click(sender, e);
-            }
-        }
+   
 
         private void btnColorPicker_Click(object sender, EventArgs e)
         {
@@ -554,5 +584,7 @@ namespace Paint.UI
         {
             isFill = chkFill.Checked;
         }
+
+       
     }
 }

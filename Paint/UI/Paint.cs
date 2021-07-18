@@ -284,8 +284,49 @@ namespace Paint.UI
                     graphic.DrawLine(pen, startPoint, endPoint);
                     break;
                 case Shape.Triangle:
+                    pen.StartCap = LineCap.Triangle;
+                    pen.EndCap = LineCap.Triangle;
+                    GraphicsPath trianglePath = new GraphicsPath();
+                    Rectangle rectangleTriangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
+                    Point pointLeft = new Point(rectangleTriangle.X, rectangleTriangle.Bottom);
+                    Point pointRight = new Point(rectangleTriangle.Right, rectangleTriangle.Bottom);
+                    Point pointTop = new Point((rectangleTriangle.X + rectangleTriangle.Right)/2,rectangleTriangle.Y);
+                 
+                    trianglePath.AddCurve(new Point[] { pointLeft, pointRight, pointTop, pointLeft },0);
+                    if (isFill)
+                    {
+                        graphic.FillPath(brush, trianglePath);
+                    }
+                    else
+                    {
+                        graphic.DrawPath(pen, trianglePath);
+                    }
+                   
                     break;
+                case Shape.RightTriangle:
+                    pen.StartCap = LineCap.Triangle;
+                    pen.EndCap = LineCap.Triangle;
+                    GraphicsPath RightTrianglePath = new GraphicsPath();
+                    Rectangle rectangleRightTriangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
+                    Point pointLeft1 = new Point(rectangleRightTriangle.X, rectangleRightTriangle.Bottom);
+                    Point pointRight1 = new Point(rectangleRightTriangle.Right, rectangleRightTriangle.Bottom);
+                    Point pointTopRight1 = new Point(rectangleRightTriangle.X , rectangleRightTriangle.Y);
 
+                    RightTrianglePath.AddCurve(new Point[] { pointLeft1, pointRight1, pointTopRight1, pointLeft1 }, 0);
+                    if (isFill)
+                    {
+                        graphic.FillPath(brush, RightTrianglePath);
+                    }
+                    else
+                    {
+                        graphic.DrawPath(pen, RightTrianglePath);
+                    }
+                    break;
+                case Shape.Polygon:
+                    pen.StartCap = LineCap.Flat;
+                    pen.EndCap = LineCap.Flat;
+                    graphic.DrawLine(pen, startPoint, endPoint);
+                    break;
                 case Shape.Petagon:
                     break;
 
@@ -417,6 +458,20 @@ namespace Paint.UI
         private void btnDoubleArrow_Click(object sender, EventArgs e)
         {
             shape = Shape.DoubleArrow;
+        }
+        private void btbTriangle_Click(object sender, EventArgs e)
+        {
+            shape = Shape.Triangle;
+          
+        }
+        private void btnRightTriangle_Click(object sender, EventArgs e)
+        {
+            shape = Shape.RightTriangle;
+
+        }
+        private void btnPolygon_Click(object sender, EventArgs e)
+        {
+            shape = Shape.Polygon;
         }
         private void btnForeColor_Click(object sender, EventArgs e)
         {
@@ -554,6 +609,10 @@ namespace Paint.UI
                 tssPrompt.Text = previousPrompt;
 
             }
+            else if(shape ==Shape.Polygon)
+            {
+
+            }
 
         }
 
@@ -567,9 +626,6 @@ namespace Paint.UI
             btnForeColor.BackColor = color;
 
         }
-
-   
-
         private void btnColorPicker_Click(object sender, EventArgs e)
         {
             previousShape = shape;
@@ -585,6 +641,6 @@ namespace Paint.UI
             isFill = chkFill.Checked;
         }
 
-       
+      
     }
 }

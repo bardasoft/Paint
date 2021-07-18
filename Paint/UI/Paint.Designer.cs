@@ -54,11 +54,14 @@ namespace Paint.UI
             this.btnRectangle = new System.Windows.Forms.Button();
             this.btnEllipse = new System.Windows.Forms.Button();
             this.btnCircle = new System.Windows.Forms.Button();
+            this.btbTriangle = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnErase = new System.Windows.Forms.Button();
             this.btnFill = new System.Windows.Forms.Button();
-            this.btnArrow = new System.Windows.Forms.Button();
             this.btnDoubleArrow = new System.Windows.Forms.Button();
+            this.btnArrow = new System.Windows.Forms.Button();
+            this.btnRightTriangle = new System.Windows.Forms.Button();
+            this.btnPolygon = new System.Windows.Forms.Button();
             this.picBoard = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
@@ -217,11 +220,14 @@ namespace Paint.UI
             this.tableLayoutPanel2.Controls.Add(this.btnRectangle, 9, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnEllipse, 10, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnCircle, 11, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnClear, 18, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnErase, 17, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnFill, 16, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnArrow, 12, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnDoubleArrow, 13, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btbTriangle, 12, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnClear, 20, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnErase, 19, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnFill, 18, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnDoubleArrow, 17, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnArrow, 16, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnRightTriangle, 13, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnPolygon, 14, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
@@ -473,12 +479,27 @@ namespace Paint.UI
             this.btnCircle.UseVisualStyleBackColor = true;
             this.btnCircle.Click += new System.EventHandler(this.btnCircle_Click);
             // 
+            // btbTriangle
+            // 
+            this.btbTriangle.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btbTriangle.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
+            this.btbTriangle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btbTriangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btbTriangle.Location = new System.Drawing.Point(804, 0);
+            this.btbTriangle.Margin = new System.Windows.Forms.Padding(0);
+            this.btbTriangle.Name = "btbTriangle";
+            this.btbTriangle.Size = new System.Drawing.Size(46, 48);
+            this.btbTriangle.TabIndex = 6;
+            this.btbTriangle.Text = "Triangle";
+            this.btbTriangle.UseVisualStyleBackColor = true;
+            this.btbTriangle.Click += new System.EventHandler(this.btbTriangle_Click);
+            // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(1092, 0);
+            this.btnClear.Location = new System.Drawing.Point(1188, 0);
             this.btnClear.Margin = new System.Windows.Forms.Padding(0);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(46, 24);
+            this.btnClear.Size = new System.Drawing.Size(34, 24);
             this.btnClear.TabIndex = 13;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -490,7 +511,7 @@ namespace Paint.UI
             this.btnErase.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
             this.btnErase.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnErase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnErase.Location = new System.Drawing.Point(1044, 0);
+            this.btnErase.Location = new System.Drawing.Point(1140, 0);
             this.btnErase.Margin = new System.Windows.Forms.Padding(0);
             this.btnErase.Name = "btnErase";
             this.btnErase.Size = new System.Drawing.Size(46, 48);
@@ -505,7 +526,7 @@ namespace Paint.UI
             this.btnFill.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
             this.btnFill.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnFill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFill.Location = new System.Drawing.Point(996, 0);
+            this.btnFill.Location = new System.Drawing.Point(1092, 0);
             this.btnFill.Margin = new System.Windows.Forms.Padding(0);
             this.btnFill.Name = "btnFill";
             this.btnFill.Size = new System.Drawing.Size(46, 48);
@@ -514,13 +535,28 @@ namespace Paint.UI
             this.btnFill.UseVisualStyleBackColor = true;
             this.btnFill.Click += new System.EventHandler(this.btnFill_Click);
             // 
+            // btnDoubleArrow
+            // 
+            this.btnDoubleArrow.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnDoubleArrow.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
+            this.btnDoubleArrow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnDoubleArrow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDoubleArrow.Location = new System.Drawing.Point(1044, 0);
+            this.btnDoubleArrow.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDoubleArrow.Name = "btnDoubleArrow";
+            this.btnDoubleArrow.Size = new System.Drawing.Size(46, 48);
+            this.btnDoubleArrow.TabIndex = 7;
+            this.btnDoubleArrow.Text = "Double Arrow";
+            this.btnDoubleArrow.UseVisualStyleBackColor = true;
+            this.btnDoubleArrow.Click += new System.EventHandler(this.btnDoubleArrow_Click);
+            // 
             // btnArrow
             // 
             this.btnArrow.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnArrow.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
             this.btnArrow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnArrow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnArrow.Location = new System.Drawing.Point(804, 0);
+            this.btnArrow.Location = new System.Drawing.Point(996, 0);
             this.btnArrow.Margin = new System.Windows.Forms.Padding(0);
             this.btnArrow.Name = "btnArrow";
             this.btnArrow.Size = new System.Drawing.Size(46, 48);
@@ -529,20 +565,35 @@ namespace Paint.UI
             this.btnArrow.UseVisualStyleBackColor = true;
             this.btnArrow.Click += new System.EventHandler(this.btnArrow_Click);
             // 
-            // btnDoubleArrow
+            // btnRightTriangle
             // 
-            this.btnDoubleArrow.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnDoubleArrow.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
-            this.btnDoubleArrow.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnDoubleArrow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDoubleArrow.Location = new System.Drawing.Point(852, 0);
-            this.btnDoubleArrow.Margin = new System.Windows.Forms.Padding(0);
-            this.btnDoubleArrow.Name = "btnDoubleArrow";
-            this.btnDoubleArrow.Size = new System.Drawing.Size(46, 48);
-            this.btnDoubleArrow.TabIndex = 7;
-            this.btnDoubleArrow.Text = "Double Arrow";
-            this.btnDoubleArrow.UseVisualStyleBackColor = true;
-            this.btnDoubleArrow.Click += new System.EventHandler(this.btnDoubleArrow_Click);
+            this.btnRightTriangle.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnRightTriangle.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
+            this.btnRightTriangle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnRightTriangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRightTriangle.Location = new System.Drawing.Point(852, 0);
+            this.btnRightTriangle.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRightTriangle.Name = "btnRightTriangle";
+            this.btnRightTriangle.Size = new System.Drawing.Size(46, 48);
+            this.btnRightTriangle.TabIndex = 6;
+            this.btnRightTriangle.Text = "RightTriangle";
+            this.btnRightTriangle.UseVisualStyleBackColor = true;
+            this.btnRightTriangle.Click += new System.EventHandler(this.btnRightTriangle_Click);
+            // 
+            // btnPolygon
+            // 
+            this.btnPolygon.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnPolygon.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
+            this.btnPolygon.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnPolygon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPolygon.Location = new System.Drawing.Point(900, 0);
+            this.btnPolygon.Margin = new System.Windows.Forms.Padding(0);
+            this.btnPolygon.Name = "btnPolygon";
+            this.btnPolygon.Size = new System.Drawing.Size(46, 48);
+            this.btnPolygon.TabIndex = 6;
+            this.btnPolygon.Text = "Polygon";
+            this.btnPolygon.UseVisualStyleBackColor = true;
+            this.btnPolygon.Click += new System.EventHandler(this.btnPolygon_Click);
             // 
             // picBoard
             // 
@@ -659,6 +710,9 @@ namespace Paint.UI
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Button btnArrow;
         private System.Windows.Forms.Button btnDoubleArrow;
+        private System.Windows.Forms.Button btbTriangle;
+        private System.Windows.Forms.Button btnRightTriangle;
+        private System.Windows.Forms.Button btnPolygon;
     }
 }
 

@@ -18,10 +18,12 @@ namespace Paint.Data
         Ellipse,
         Circle,
         Triangle,
+        RightTriangle,
         Petagon,
         Hecxagon,
         Arrow,
         DoubleArrow,
+        Polygon,
         Fill,
         Text,
     }

@@ -653,10 +653,13 @@ namespace Paint.UI
             this.ClientSize = new System.Drawing.Size(1230, 600);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.KeyPreview = true;
             this.Name = "frmPaint";
             this.Text = "Paint";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmPaint_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmPaint_KeyPress);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.frmPaint_KeyUp);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

@@ -145,7 +145,7 @@ namespace Paint.UI
                 picBoard.Refresh();//call paint
             }
         }
-      
+
         List<Point> ps = new List<Point>();
         private void picBoard_MouseUp(object sender, MouseEventArgs e)
         {
@@ -168,7 +168,7 @@ namespace Paint.UI
                     }
                     if (eLocation.Y + inputSize.Height > picBoard.Height)
                     {
-                        locationInputText.Y = picBoard.Height - inputSize.Height+100;
+                        locationInputText.Y = picBoard.Height - inputSize.Height + 100;
 
                     }
                     inputText.Location = locationInputText;
@@ -180,26 +180,22 @@ namespace Paint.UI
                 case Shape.Polygon:
                     pen.StartCap = LineCap.Flat;
                     pen.EndCap = LineCap.Flat;
-               
-                        GraphicsPath gpath  = new GraphicsPath();
-                  
-                        ps.Add(e.Location);
-                    
-                    if(ps.Count>3)
+
+                    GraphicsPath gpath = new GraphicsPath();
+                    if(!ps.Contains(e.Location))
                     {
-                        // ps.Add(ps[0]);
-                       
-                        gpath.AddClosedCurve(ps.ToArray(), 0);
-
-                        graphic.DrawPath(pen, gpath);
-                        picBoard.Invalidate();
-
+                        ps.Add(e.Location);
                     }
-                   
+                    if (ps.Count >=2)
+                    {
+                        gpath.AddCurve(ps.ToArray(), 0);
+                        graphic.DrawPath(pen, gpath);
+                    }
 
-                       
-                    
-                 //   graphic.DrawLine(pen, startPoint, endPoint);
+
+
+
+                    //   graphic.DrawLine(pen, startPoint, endPoint);
                     break;
                 default:
                     break;
@@ -315,9 +311,9 @@ namespace Paint.UI
                     Rectangle rectangleTriangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
                     Point pointLeft = new Point(rectangleTriangle.X, rectangleTriangle.Bottom);
                     Point pointRight = new Point(rectangleTriangle.Right, rectangleTriangle.Bottom);
-                    Point pointTop = new Point((rectangleTriangle.X + rectangleTriangle.Right)/2,rectangleTriangle.Y);
-                 
-                    trianglePath.AddCurve(new Point[] { pointLeft, pointRight, pointTop, pointLeft },0);
+                    Point pointTop = new Point((rectangleTriangle.X + rectangleTriangle.Right) / 2, rectangleTriangle.Y);
+
+                    trianglePath.AddCurve(new Point[] { pointLeft, pointRight, pointTop, pointLeft }, 0);
                     if (isFill)
                     {
                         graphic.FillPath(brush, trianglePath);
@@ -326,7 +322,7 @@ namespace Paint.UI
                     {
                         graphic.DrawPath(pen, trianglePath);
                     }
-                   
+
                     break;
                 case Shape.RightTriangle:
                     pen.StartCap = LineCap.Triangle;
@@ -335,7 +331,7 @@ namespace Paint.UI
                     Rectangle rectangleRightTriangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
                     Point pointLeft1 = new Point(rectangleRightTriangle.X, rectangleRightTriangle.Bottom);
                     Point pointRight1 = new Point(rectangleRightTriangle.Right, rectangleRightTriangle.Bottom);
-                    Point pointTopRight1 = new Point(rectangleRightTriangle.X , rectangleRightTriangle.Y);
+                    Point pointTopRight1 = new Point(rectangleRightTriangle.X, rectangleRightTriangle.Y);
 
                     RightTrianglePath.AddCurve(new Point[] { pointLeft1, pointRight1, pointTopRight1, pointLeft1 }, 0);
                     if (isFill)
@@ -484,7 +480,7 @@ namespace Paint.UI
         private void btbTriangle_Click(object sender, EventArgs e)
         {
             shape = Shape.Triangle;
-          
+
         }
         private void btnRightTriangle_Click(object sender, EventArgs e)
         {
@@ -631,7 +627,7 @@ namespace Paint.UI
                 tssPrompt.Text = previousPrompt;
 
             }
-            else if(shape ==Shape.Polygon)
+            else if (shape == Shape.Polygon)
             {
 
             }
@@ -663,6 +659,40 @@ namespace Paint.UI
             isFill = chkFill.Checked;
         }
 
-      
+        private void frmPaint_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void frmPaint_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (shape == Shape.Polygon)
+                {
+
+                    GraphicsPath gpath = new GraphicsPath();
+                    if(ps.Count>2)
+                    {
+                      
+                        gpath.AddClosedCurve(ps.ToArray(), 0);
+                        if (isFill)
+                        {
+                            graphic.FillPath(brush, gpath);
+                        }
+                        else
+                        {
+                            graphic.DrawPath(pen, gpath);
+                        }
+                        ps.Clear();
+
+
+                        picBoard.Invalidate();
+                    }
+                   
+                }
+            }
+
+        }
     }
 }

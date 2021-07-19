@@ -30,6 +30,17 @@ namespace Paint.UI
         private SolidBrush brush;
         bool isFill;
         private Shape shape;
+        private Shape Shape
+        {
+            get { 
+                if(shape!=Shape.Polygon)
+                {
+                    ps.Clear();
+                }
+                return shape; 
+            }
+            set { shape = value; }
+        }
         private Shape previousShape;
         private string previousPrompt;
 
@@ -90,7 +101,7 @@ namespace Paint.UI
             {
                 endPoint = e.Location;
 
-                switch (shape)
+                switch (Shape)
                 {
                     case Shape.None:
                         break;
@@ -151,9 +162,9 @@ namespace Paint.UI
         {
             paint = false;
             endPoint = e.Location;
-            Paint(graphic, shape);
+            Paint(graphic, Shape);
 
-            switch (shape)
+            switch (Shape)
             {
                 case Shape.Text:
                     Point eLocation = e.Location;
@@ -209,7 +220,7 @@ namespace Paint.UI
         {
             var paintGraphic = e.Graphics;
 
-            Paint(paintGraphic, shape);
+            Paint(paintGraphic, Shape);
 
 
 
@@ -411,25 +422,25 @@ namespace Paint.UI
 
         private void btnNone_Click(object sender, EventArgs e)
         {
-            shape = Shape.None;
+            Shape = Shape.None;
             tssPrompt.Text = string.Empty;
 
         }
         private void btnLine_Click(object sender, EventArgs e)
         {
-            shape = Shape.Line;
+            Shape = Shape.Line;
             tssPrompt.Text = "Pick and hold 2 points";
         }
 
         private void btnFree_Click(object sender, EventArgs e)
         {
-            shape = Shape.Free;
+            Shape = Shape.Free;
             //    picBoard.Cursor = new Cursor();
             tssPrompt.Text = "Hold your mouse";
         }
         private void btnErase_Click(object sender, EventArgs e)
         {
-            shape = Shape.Erase;
+            Shape = Shape.Erase;
             //  picBoard.Cursor = new Cursor(@"D:\Libraries\Icons\eraser.ico");
             tssPrompt.Text = "Hold your mouse";
 
@@ -443,53 +454,53 @@ namespace Paint.UI
 
         private void btnRectangle_Click(object sender, EventArgs e)
         {
-            shape = Shape.Rectangle;
+            Shape = Shape.Rectangle;
             tssPrompt.Text = "Pick and hold 2 points";
 
         }
 
         private void btnEllipse_Click(object sender, EventArgs e)
         {
-            shape = Shape.Ellipse;
+            Shape = Shape.Ellipse;
             tssPrompt.Text = "Pick and hold 2 points";
         }
         private void btnCircle_Click(object sender, EventArgs e)
         {
-            shape = Shape.Circle;
+            Shape = Shape.Circle;
             tssPrompt.Text = "Pick a center point and hold your mouse to set radius";
         }
         private void btnText_Click(object sender, EventArgs e)
         {
-            shape = Shape.Text;
+            Shape = Shape.Text;
             tssPrompt.Text = "Pick a point to place text";
         }
         private void btnFill_Click(object sender, EventArgs e)
         {
-            shape = Shape.Fill;
+            Shape = Shape.Fill;
             tssPrompt.Text = "Pick a point to fill an are";
         }
         private void btnArrow_Click(object sender, EventArgs e)
         {
-            shape = Shape.Arrow;
+            Shape = Shape.Arrow;
         }
 
         private void btnDoubleArrow_Click(object sender, EventArgs e)
         {
-            shape = Shape.DoubleArrow;
+            Shape = Shape.DoubleArrow;
         }
         private void btbTriangle_Click(object sender, EventArgs e)
         {
-            shape = Shape.Triangle;
+            Shape = Shape.Triangle;
 
         }
         private void btnRightTriangle_Click(object sender, EventArgs e)
         {
-            shape = Shape.RightTriangle;
+            Shape = Shape.RightTriangle;
 
         }
         private void btnPolygon_Click(object sender, EventArgs e)
         {
-            shape = Shape.Polygon;
+            Shape = Shape.Polygon;
         }
         private void btnForeColor_Click(object sender, EventArgs e)
         {
@@ -606,7 +617,7 @@ namespace Paint.UI
 
         private void picBoard_MouseClick(object sender, MouseEventArgs e)
         {
-            if (shape == Shape.Fill)
+            if (Shape == Shape.Fill)
             {
                 Point point = set_Point(picBoard, e.Location);
                 Color color = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
@@ -616,18 +627,18 @@ namespace Paint.UI
                     picBoard.Refresh();
                 }
             }
-            else if (shape == Shape.Point)
+            else if (Shape == Shape.Point)
             {
                 Point point = set_Point(picBoard, e.Location);
                 foreColor = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
                 pen.Color = foreColor;
                 brush.Color = foreColor;
                 btnForeColor.BackColor = foreColor;
-                shape = previousShape;
+                Shape = previousShape;
                 tssPrompt.Text = previousPrompt;
 
             }
-            else if (shape == Shape.Polygon)
+            else if (Shape == Shape.Polygon)
             {
 
             }
@@ -646,9 +657,9 @@ namespace Paint.UI
         }
         private void btnColorPicker_Click(object sender, EventArgs e)
         {
-            previousShape = shape;
+            previousShape = Shape;
             previousPrompt = tssPrompt.Text;
-            shape = Shape.Point;
+            Shape = Shape.Point;
             tssPrompt.Text = "Pick a point to get corlor";
             // picBoard.Cursor= new Cursor(Resources.Resource.ResourceManager.GetString(Resources.Resource.DigitalPencil))
 
@@ -668,7 +679,7 @@ namespace Paint.UI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (shape == Shape.Polygon)
+                if (Shape == Shape.Polygon)
                 {
 
                     GraphicsPath gpath = new GraphicsPath();

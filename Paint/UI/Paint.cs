@@ -174,7 +174,7 @@ namespace Paint.UI
                     inputText.Location = locationInputText;
                     if (inputText.ShowDialog() == DialogResult.OK)
                     {
-                        graphic.DrawString(inputText.InputString, new Font("Arial", 12), brush, startPoint);
+                        graphic.DrawString(inputText.InputString, new Font("Arial", 12), brush, endPoint);
                     }
                     break;
                 case Shape.Polygon:
@@ -188,11 +188,12 @@ namespace Paint.UI
                     if(ps.Count>3)
                     {
                         // ps.Add(ps[0]);
-                      graphic.Clear(backgroundColor);
+                       
                         gpath.AddClosedCurve(ps.ToArray(), 0);
 
                         graphic.DrawPath(pen, gpath);
-                        
+                        picBoard.Invalidate();
+
                     }
                    
 

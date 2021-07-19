@@ -145,7 +145,8 @@ namespace Paint.UI
                 picBoard.Refresh();//call paint
             }
         }
-
+      
+        List<Point> ps = new List<Point>();
         private void picBoard_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
@@ -175,6 +176,29 @@ namespace Paint.UI
                     {
                         graphic.DrawString(inputText.InputString, new Font("Arial", 12), brush, startPoint);
                     }
+                    break;
+                case Shape.Polygon:
+                    pen.StartCap = LineCap.Flat;
+                    pen.EndCap = LineCap.Flat;
+               
+                        GraphicsPath gpath  = new GraphicsPath();
+                  
+                        ps.Add(e.Location);
+                    
+                    if(ps.Count>3)
+                    {
+                        // ps.Add(ps[0]);
+                      graphic.Clear(backgroundColor);
+                        gpath.AddClosedCurve(ps.ToArray(), 0);
+
+                        graphic.DrawPath(pen, gpath);
+                        
+                    }
+                   
+
+                       
+                    
+                 //   graphic.DrawLine(pen, startPoint, endPoint);
                     break;
                 default:
                     break;
@@ -323,9 +347,6 @@ namespace Paint.UI
                     }
                     break;
                 case Shape.Polygon:
-                    pen.StartCap = LineCap.Flat;
-                    pen.EndCap = LineCap.Flat;
-                    graphic.DrawLine(pen, startPoint, endPoint);
                     break;
                 case Shape.Petagon:
                     break;

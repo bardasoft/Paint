@@ -46,8 +46,8 @@ namespace Paint.UI
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.cbxSize = new System.Windows.Forms.ComboBox();
-            this.chkFill = new System.Windows.Forms.CheckBox();
-            this.btnNone = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbxLDashStyle = new System.Windows.Forms.ComboBox();
             this.btnText = new System.Windows.Forms.Button();
             this.btnFree = new System.Windows.Forms.Button();
             this.btnLine = new System.Windows.Forms.Button();
@@ -56,12 +56,15 @@ namespace Paint.UI
             this.btnCircle = new System.Windows.Forms.Button();
             this.btbTriangle = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
-            this.btnErase = new System.Windows.Forms.Button();
             this.btnFill = new System.Windows.Forms.Button();
             this.btnDoubleArrow = new System.Windows.Forms.Button();
             this.btnArrow = new System.Windows.Forms.Button();
             this.btnRightTriangle = new System.Windows.Forms.Button();
             this.btnPolygon = new System.Windows.Forms.Button();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnNone = new System.Windows.Forms.Button();
+            this.chkFill = new System.Windows.Forms.CheckBox();
+            this.btnErase = new System.Windows.Forms.Button();
             this.picBoard = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
@@ -75,6 +78,7 @@ namespace Paint.UI
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picColor)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoard)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -93,7 +97,7 @@ namespace Paint.UI
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1230, 600);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1222, 579);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tabControl1
@@ -105,7 +109,7 @@ namespace Paint.UI
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1230, 100);
+            this.tabControl1.Size = new System.Drawing.Size(1222, 100);
             this.tabControl1.TabIndex = 4;
             // 
             // tabPage1
@@ -114,7 +118,7 @@ namespace Paint.UI
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1222, 72);
+            this.tabPage1.Size = new System.Drawing.Size(1481, 72);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "File";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -127,7 +131,7 @@ namespace Paint.UI
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 982F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 1241F));
             this.tableLayoutPanel4.Controls.Add(this.btnSave, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnOpen, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnNew, 0, 0);
@@ -137,7 +141,7 @@ namespace Paint.UI
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1222, 72);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1481, 72);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // btnSave
@@ -179,7 +183,7 @@ namespace Paint.UI
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(1222, 72);
+            this.tabPage2.Size = new System.Drawing.Size(1214, 72);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Home";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -213,7 +217,6 @@ namespace Paint.UI
             this.tableLayoutPanel2.Controls.Add(this.btnForeColor, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.picColor, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 5, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnNone, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnText, 6, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnFree, 7, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnLine, 8, 0);
@@ -222,19 +225,20 @@ namespace Paint.UI
             this.tableLayoutPanel2.Controls.Add(this.btnCircle, 11, 0);
             this.tableLayoutPanel2.Controls.Add(this.btbTriangle, 12, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnClear, 20, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnErase, 19, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnFill, 18, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnDoubleArrow, 17, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnArrow, 16, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnRightTriangle, 13, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnPolygon, 14, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel5, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnErase, 19, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1222, 72);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1214, 72);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // btnColorPicker
@@ -299,11 +303,12 @@ namespace Paint.UI
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.3268F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.6732F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.36364F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.63636F));
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cbxSize, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.chkFill, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.cbxLDashStyle, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(406, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -318,7 +323,7 @@ namespace Paint.UI
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 10);
+            this.label1.Location = new System.Drawing.Point(0, 10);
             this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 15);
@@ -353,41 +358,35 @@ namespace Paint.UI
             "40",
             "45",
             "50"});
-            this.cbxSize.Location = new System.Drawing.Point(63, 6);
+            this.cbxSize.Location = new System.Drawing.Point(51, 6);
             this.cbxSize.Margin = new System.Windows.Forms.Padding(0);
             this.cbxSize.Name = "cbxSize";
-            this.cbxSize.Size = new System.Drawing.Size(39, 23);
+            this.cbxSize.Size = new System.Drawing.Size(47, 23);
             this.cbxSize.TabIndex = 2;
             this.cbxSize.Text = "1";
             this.cbxSize.SelectedIndexChanged += new System.EventHandler(this.cbxSize_SelectedIndexChanged);
             // 
-            // chkFill
+            // label2
             // 
-            this.chkFill.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.chkFill.AutoSize = true;
-            this.chkFill.Location = new System.Drawing.Point(7, 36);
-            this.chkFill.Margin = new System.Windows.Forms.Padding(0);
-            this.chkFill.Name = "chkFill";
-            this.chkFill.Size = new System.Drawing.Size(41, 19);
-            this.chkFill.TabIndex = 4;
-            this.chkFill.Text = "Fill";
-            this.chkFill.UseVisualStyleBackColor = true;
-            this.chkFill.CheckedChanged += new System.EventHandler(this.chkFill_CheckedChanged);
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 46);
+            this.label2.Margin = new System.Windows.Forms.Padding(0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Style";
             // 
-            // btnNone
+            // cbxLDashStyle
             // 
-            this.btnNone.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnNone.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
-            this.btnNone.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnNone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNone.Location = new System.Drawing.Point(0, 0);
-            this.btnNone.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNone.Name = "btnNone";
-            this.btnNone.Size = new System.Drawing.Size(46, 48);
-            this.btnNone.TabIndex = 0;
-            this.btnNone.Text = "None";
-            this.btnNone.UseVisualStyleBackColor = true;
-            this.btnNone.Click += new System.EventHandler(this.btnNone_Click);
+            this.cbxLDashStyle.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cbxLDashStyle.FormattingEnabled = true;
+            this.cbxLDashStyle.Location = new System.Drawing.Point(42, 42);
+            this.cbxLDashStyle.Margin = new System.Windows.Forms.Padding(0);
+            this.cbxLDashStyle.Name = "cbxLDashStyle";
+            this.cbxLDashStyle.Size = new System.Drawing.Size(66, 23);
+            this.cbxLDashStyle.TabIndex = 2;
+            this.cbxLDashStyle.SelectedIndexChanged += new System.EventHandler(this.cbxLDashStyle_SelectedIndexChanged);
             // 
             // btnText
             // 
@@ -499,26 +498,11 @@ namespace Paint.UI
             this.btnClear.Location = new System.Drawing.Point(1188, 0);
             this.btnClear.Margin = new System.Windows.Forms.Padding(0);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(34, 24);
+            this.btnClear.Size = new System.Drawing.Size(26, 24);
             this.btnClear.TabIndex = 13;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // btnErase
-            // 
-            this.btnErase.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnErase.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
-            this.btnErase.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnErase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnErase.Location = new System.Drawing.Point(1140, 0);
-            this.btnErase.Margin = new System.Windows.Forms.Padding(0);
-            this.btnErase.Name = "btnErase";
-            this.btnErase.Size = new System.Drawing.Size(46, 48);
-            this.btnErase.TabIndex = 7;
-            this.btnErase.Text = "Erase";
-            this.btnErase.UseVisualStyleBackColor = true;
-            this.btnErase.Click += new System.EventHandler(this.btnErase_Click);
             // 
             // btnFill
             // 
@@ -595,13 +579,71 @@ namespace Paint.UI
             this.btnPolygon.UseVisualStyleBackColor = true;
             this.btnPolygon.Click += new System.EventHandler(this.btnPolygon_Click);
             // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 1;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.btnNone, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.chkFill, 0, 1);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 68.05556F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 31.94444F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(48, 72);
+            this.tableLayoutPanel5.TabIndex = 14;
+            // 
+            // btnNone
+            // 
+            this.btnNone.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnNone.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
+            this.btnNone.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnNone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNone.Location = new System.Drawing.Point(0, 0);
+            this.btnNone.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNone.Name = "btnNone";
+            this.btnNone.Size = new System.Drawing.Size(46, 48);
+            this.btnNone.TabIndex = 0;
+            this.btnNone.Text = "None";
+            this.btnNone.UseVisualStyleBackColor = true;
+            this.btnNone.Click += new System.EventHandler(this.btnNone_Click);
+            // 
+            // chkFill
+            // 
+            this.chkFill.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.chkFill.AutoSize = true;
+            this.chkFill.Location = new System.Drawing.Point(3, 49);
+            this.chkFill.Margin = new System.Windows.Forms.Padding(0);
+            this.chkFill.Name = "chkFill";
+            this.chkFill.Size = new System.Drawing.Size(41, 19);
+            this.chkFill.TabIndex = 4;
+            this.chkFill.Text = "Fill";
+            this.chkFill.UseVisualStyleBackColor = true;
+            this.chkFill.CheckedChanged += new System.EventHandler(this.chkFill_CheckedChanged);
+            // 
+            // btnErase
+            // 
+            this.btnErase.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnErase.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Teal;
+            this.btnErase.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnErase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnErase.Location = new System.Drawing.Point(1140, 0);
+            this.btnErase.Margin = new System.Windows.Forms.Padding(0);
+            this.btnErase.Name = "btnErase";
+            this.btnErase.Size = new System.Drawing.Size(46, 48);
+            this.btnErase.TabIndex = 7;
+            this.btnErase.Text = "Erase";
+            this.btnErase.UseVisualStyleBackColor = true;
+            this.btnErase.Click += new System.EventHandler(this.btnErase_Click);
+            // 
             // picBoard
             // 
             this.picBoard.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picBoard.Location = new System.Drawing.Point(0, 100);
             this.picBoard.Margin = new System.Windows.Forms.Padding(0);
             this.picBoard.Name = "picBoard";
-            this.picBoard.Size = new System.Drawing.Size(1230, 500);
+            this.picBoard.Size = new System.Drawing.Size(1222, 479);
             this.picBoard.TabIndex = 1;
             this.picBoard.TabStop = false;
             this.picBoard.SizeChanged += new System.EventHandler(this.picBoard_SizeChanged);
@@ -617,9 +659,9 @@ namespace Paint.UI
             this.tssCoordinate,
             this.toolStripSplitButton2,
             this.tssPrompt});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 578);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 557);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1230, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1222, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -650,7 +692,7 @@ namespace Paint.UI
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnNone;
-            this.ClientSize = new System.Drawing.Size(1230, 600);
+            this.ClientSize = new System.Drawing.Size(1222, 579);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.KeyPreview = true;
@@ -669,6 +711,8 @@ namespace Paint.UI
             ((System.ComponentModel.ISupportInitialize)(this.picColor)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoard)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -716,6 +760,9 @@ namespace Paint.UI
         private System.Windows.Forms.Button btbTriangle;
         private System.Windows.Forms.Button btnRightTriangle;
         private System.Windows.Forms.Button btnPolygon;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbxLDashStyle;
     }
 }
 

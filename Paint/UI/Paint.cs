@@ -55,6 +55,9 @@ namespace Paint.UI
         public frmPaint()
         {
             InitializeComponent();
+       cbxLDashStyle.Items.AddRange( Enum.GetNames(typeof(DashStyle)));
+
+          
 
         }
         private void frmPaint_Load(object sender, EventArgs e)
@@ -83,7 +86,7 @@ namespace Paint.UI
             erase = new Pen(backgroundSystemColor, widthErase);
             brush = new SolidBrush(foreColor);
             btnForeColor.BackColor = foreColor;
-
+            cbxLDashStyle.SelectedIndex = 0;
             btnNone.Select();
 
         }
@@ -564,7 +567,10 @@ namespace Paint.UI
         {
             pen.Width = float.Parse(cbxSize.Text);
         }
-
+        private void cbxLDashStyle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pen.DashStyle = Enum.Parse<DashStyle>(cbxLDashStyle.SelectedItem.ToString());
+        }
         private static Point set_Point(PictureBox pb, Point pt)
         {
             float px = 1f * pb.Width / pb.Width;
@@ -624,6 +630,7 @@ namespace Paint.UI
                 if (color != pen.Color/*GetColorAt(e.X, e.Y) != pen.Color*/)
                 {
                     Fill(bitmap, point.X, point.Y, pen.Color);
+                // Utilities. FillArea(bitmap, point.X, point.Y, pen.Color);
                     picBoard.Refresh();
                 }
             }
@@ -705,5 +712,7 @@ namespace Paint.UI
             }
 
         }
+
+       
     }
 }

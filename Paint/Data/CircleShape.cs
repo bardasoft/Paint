@@ -20,8 +20,8 @@ namespace Paint.Data
             this.Pen = pen;
             this.StartPoint = startPoint;
             this.EndPoint = endPoint;
-            this.IsFill = isFill;
-            this.IsFillBorder = isFillBorder;
+            this.IsFilled = isFill;
+            this.IsDrawBorder = isFillBorder;
             this.CenterPoint = StartPoint;
             Radius = (int)Utilities.DistanceTwoPoints(StartPoint, EndPoint);
             Rectangle = new Rectangle(this.CenterPoint.X - Radius, CenterPoint.Y - Radius, Radius * 2, Radius * 2);
@@ -30,10 +30,10 @@ namespace Paint.Data
         {
             if (StartPoint != EndPoint)
             {
-                if (IsFill)
+                if (IsFilled)
                 {
                     Graphics.FillEllipse(Brush, Rectangle);
-                    if(IsFillBorder)
+                    if(IsDrawBorder)
                     {
                         Graphics.DrawEllipse(Pen, Rectangle);
                     }

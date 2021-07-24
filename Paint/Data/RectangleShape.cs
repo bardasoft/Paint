@@ -18,17 +18,17 @@ namespace Paint.Data
             this.Pen = pen;
             this.StartPoint = startPoint;
             this.EndPoint = endPoint;
-            this.IsFill = isFill;
-            this.IsFillBorder = isFillBorder;
+            this.IsFilled = isFill;
+            this.IsDrawBorder = isFillBorder;
             Rectangle = Utilities.GetRectangleByPoint(StartPoint, EndPoint);
 
         }
         internal override void Draw()
         {
-            if (IsFill)
+            if (IsFilled)
             {
                 Graphics.FillRectangle(Brush, Rectangle);
-                if (IsFillBorder)
+                if (IsDrawBorder)
                 {
                     Graphics.DrawRectangle(Pen, Rectangle);
                 }

@@ -29,11 +29,11 @@ namespace Paint.UI
         private float widthErase = 20;
         private SolidBrush brush;
         bool isFill;
-        private Shape shape;
-        private Shape Shape
+        private ShapeType shape;
+        private ShapeType Shape
         {
             get { 
-                if(shape!=Shape.Polygon)
+                if(shape!=ShapeType.Polygon)
                 {
                     ps.Clear();
                 }
@@ -41,7 +41,7 @@ namespace Paint.UI
             }
             set { shape = value; }
         }
-        private Shape previousShape;
+        private ShapeType previousShape;
         private string previousPrompt;
 
         Color foreColor;
@@ -106,10 +106,10 @@ namespace Paint.UI
 
                 switch (Shape)
                 {
-                    case Shape.None:
+                    case ShapeType.None:
                         break;
 
-                    case Shape.Free:
+                    case ShapeType.Free:
                         pen.LineJoin = LineJoin.Round;
                         pen.StartCap = LineCap.Flat;
                         pen.EndCap = LineCap.Flat;
@@ -117,7 +117,7 @@ namespace Paint.UI
                         startPoint = endPoint;
                         break;
 
-                    case Shape.Erase:
+                    case ShapeType.Erase:
                         pen.LineJoin = LineJoin.Round;
                         pen.StartCap = LineCap.Flat;
                         pen.EndCap = LineCap.Flat;
@@ -125,32 +125,32 @@ namespace Paint.UI
                         startPoint = endPoint;
                         break;
 
-                    case Shape.Line:
+                    case ShapeType.Line:
 
                         break;
 
-                    case Shape.Rectangle:
+                    case ShapeType.Rectangle:
                         break;
 
-                    case Shape.Square:
+                    case ShapeType.Square:
                         break;
 
-                    case Shape.Ellipse:
+                    case ShapeType.Ellipse:
                         break;
 
-                    case Shape.Circle:
+                    case ShapeType.Circle:
                         break;
 
-                    case Shape.Triangle:
+                    case ShapeType.Triangle:
                         break;
 
-                    case Shape.Petagon:
+                    case ShapeType.Petagon:
                         break;
 
-                    case Shape.Hecxagon:
+                    case ShapeType.Hecxagon:
                         break;
 
-                    case Shape.Fill:
+                    case ShapeType.Fill:
                         break;
 
                     default:
@@ -169,7 +169,7 @@ namespace Paint.UI
 
             switch (Shape)
             {
-                case Shape.Text:
+                case ShapeType.Text:
                     Point eLocation = e.Location;
                     InputText inputText = new InputText();
 
@@ -191,7 +191,7 @@ namespace Paint.UI
                         graphic.DrawString(inputText.InputString, new Font("Arial", 12), brush, endPoint);
                     }
                     break;
-                case Shape.Polygon:
+                case ShapeType.Polygon:
                     pen.StartCap = LineCap.Flat;
                     pen.EndCap = LineCap.Flat;
 
@@ -233,49 +233,52 @@ namespace Paint.UI
             //  new Rectangle(10, 10, 300, 50), SystemColors.ControlText/*, flags*/);
         }
 
-        private new void Paint(Graphics graphic, Shape shape)
+        private new void Paint(Graphics graphic, ShapeType shape)
         {
 
             switch (shape)
             {
-                case Shape.None:
+                case ShapeType.None:
                     break;
 
-                case Shape.Free:
+                case ShapeType.Free:
                     //graphic.DrawLine(pen, startPoint, endPoint);
                     //startPoint = endPoint;
                     break;
 
-                case Shape.Erase:
+                case ShapeType.Erase:
                     // graphic.DrawLine(erase, startPoint, endPoint);
                     // startPoint = endPoint;
                     break;
 
-                case Shape.Line:
+                case ShapeType.Line:
                     pen.StartCap = LineCap.Flat;
                     pen.EndCap = LineCap.Flat;
-                    graphic.DrawLine(pen, startPoint, endPoint);
+                    // graphic.DrawLine(pen, startPoint, endPoint);
+                    LineShape line = new LineShape(graphic, pen, startPoint, endPoint);
+                    line.Draw();
 
                     break;
 
-                case Shape.Rectangle:
-                    Rectangle rectangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
-                    if (isFill)
-                    {
-                        graphic.FillRectangle(brush, rectangle);
+                case ShapeType.Rectangle:
+                    //Rectangle rectangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
+                    //if (isFill)
+                    //{
+                    //    graphic.FillRectangle(brush, rectangle);
 
-                    }
-                    else
-                    {
-                        graphic.DrawRectangle(pen, rectangle);
-                    }
-
+                    //}
+                    //else
+                    //{
+                    //    graphic.DrawRectangle(pen, rectangle);
+                    //}
+                    RectangleShape rectangleShape = new RectangleShape(graphic, brush, pen, startPoint, endPoint, isFill);
+                    rectangleShape.Draw();
                     break;
 
-                case Shape.Square:
+                case ShapeType.Square:
                     break;
 
-                case Shape.Ellipse:
+                case ShapeType.Ellipse:
                     Rectangle rectangleElip = Utilities.GetRectangleByPoint(startPoint, endPoint);
                     if (isFill)
                     {
@@ -288,37 +291,39 @@ namespace Paint.UI
 
                     break;
 
-                case Shape.Circle:
+                case ShapeType.Circle:
                     // MessageBox.Show(startPoint+ endPoint.ToString());
-                    if (startPoint != endPoint)
-                    {
-                        Point center = startPoint;
-                        int radius = (int)Utilities.DistanceTwoPoints(startPoint, endPoint);
-                        Rectangle rect = new Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2);
-                        if (isFill)
-                        {
-                            graphic.FillEllipse(brush, rect);
-                        }
-                        else
-                        {
-                            graphic.DrawEllipse(pen, rect);
-                        }
+                    //if (startPoint != endPoint)
+                    //{
+                    //    Point center = startPoint;
+                    //    int radius = (int)Utilities.DistanceTwoPoints(startPoint, endPoint);
+                    //    Rectangle rect = new Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2);
+                    //    if (isFill)
+                    //    {
+                    //        graphic.FillEllipse(brush, rect);
+                    //    }
+                    //    else
+                    //    {
+                    //        graphic.DrawEllipse(pen, rect);
+                    //    }
 
-                    }
+                    //}
+                    CircleShape circleShape = new CircleShape(graphic, brush, pen, startPoint, endPoint, isFill);
+                    circleShape.Draw();
 
                     break;
-                case Shape.Arrow:
+                case ShapeType.Arrow:
                     pen.StartCap = LineCap.Flat;
                     pen.EndCap = LineCap.ArrowAnchor;
                     graphic.DrawLine(pen, startPoint, endPoint);
 
                     break;
-                case Shape.DoubleArrow:
+                case ShapeType.DoubleArrow:
                     pen.StartCap = LineCap.ArrowAnchor;
                     pen.EndCap = LineCap.ArrowAnchor;
                     graphic.DrawLine(pen, startPoint, endPoint);
                     break;
-                case Shape.Triangle:
+                case ShapeType.Triangle:
                     pen.StartCap = LineCap.Triangle;
                     pen.EndCap = LineCap.Triangle;
                     GraphicsPath trianglePath = new GraphicsPath();
@@ -338,7 +343,7 @@ namespace Paint.UI
                     }
 
                     break;
-                case Shape.RightTriangle:
+                case ShapeType.RightTriangle:
                     pen.StartCap = LineCap.Triangle;
                     pen.EndCap = LineCap.Triangle;
                     GraphicsPath RightTrianglePath = new GraphicsPath();
@@ -357,17 +362,17 @@ namespace Paint.UI
                         graphic.DrawPath(pen, RightTrianglePath);
                     }
                     break;
-                case Shape.Polygon:
+                case ShapeType.Polygon:
                     break;
-                case Shape.Petagon:
-                    break;
-
-                case Shape.Hecxagon:
+                case ShapeType.Petagon:
                     break;
 
-                case Shape.Fill:
+                case ShapeType.Hecxagon:
                     break;
-                case Shape.Text:
+
+                case ShapeType.Fill:
+                    break;
+                case ShapeType.Text:
                     break;
 
                 default:
@@ -425,25 +430,25 @@ namespace Paint.UI
 
         private void btnNone_Click(object sender, EventArgs e)
         {
-            Shape = Shape.None;
+            Shape = ShapeType.None;
             tssPrompt.Text = string.Empty;
 
         }
         private void btnLine_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Line;
+            Shape = ShapeType.Line;
             tssPrompt.Text = "Pick and hold 2 points";
         }
 
         private void btnFree_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Free;
+            Shape = ShapeType.Free;
             //    picBoard.Cursor = new Cursor();
             tssPrompt.Text = "Hold your mouse";
         }
         private void btnErase_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Erase;
+            Shape = ShapeType.Erase;
             //  picBoard.Cursor = new Cursor(@"D:\Libraries\Icons\eraser.ico");
             tssPrompt.Text = "Hold your mouse";
 
@@ -457,53 +462,53 @@ namespace Paint.UI
 
         private void btnRectangle_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Rectangle;
+            Shape = ShapeType.Rectangle;
             tssPrompt.Text = "Pick and hold 2 points";
 
         }
 
         private void btnEllipse_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Ellipse;
+            Shape = ShapeType.Ellipse;
             tssPrompt.Text = "Pick and hold 2 points";
         }
         private void btnCircle_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Circle;
+            Shape = ShapeType.Circle;
             tssPrompt.Text = "Pick a center point and hold your mouse to set radius";
         }
         private void btnText_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Text;
+            Shape = ShapeType.Text;
             tssPrompt.Text = "Pick a point to place text";
         }
         private void btnFill_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Fill;
+            Shape = ShapeType.Fill;
             tssPrompt.Text = "Pick a point to fill an are";
         }
         private void btnArrow_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Arrow;
+            Shape = ShapeType.Arrow;
         }
 
         private void btnDoubleArrow_Click(object sender, EventArgs e)
         {
-            Shape = Shape.DoubleArrow;
+            Shape = ShapeType.DoubleArrow;
         }
         private void btbTriangle_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Triangle;
+            Shape = ShapeType.Triangle;
 
         }
         private void btnRightTriangle_Click(object sender, EventArgs e)
         {
-            Shape = Shape.RightTriangle;
+            Shape = ShapeType.RightTriangle;
 
         }
         private void btnPolygon_Click(object sender, EventArgs e)
         {
-            Shape = Shape.Polygon;
+            Shape = ShapeType.Polygon;
         }
         private void btnForeColor_Click(object sender, EventArgs e)
         {
@@ -623,7 +628,7 @@ namespace Paint.UI
 
         private void picBoard_MouseClick(object sender, MouseEventArgs e)
         {
-            if (Shape == Shape.Fill)
+            if (Shape == ShapeType.Fill)
             {
                 Point point = set_Point(picBoard, e.Location);
                 Color color = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
@@ -634,7 +639,7 @@ namespace Paint.UI
                     picBoard.Refresh();
                 }
             }
-            else if (Shape == Shape.Point)
+            else if (Shape == ShapeType.Point)
             {
                 Point point = set_Point(picBoard, e.Location);
                 foreColor = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
@@ -645,7 +650,7 @@ namespace Paint.UI
                 tssPrompt.Text = previousPrompt;
 
             }
-            else if (Shape == Shape.Polygon)
+            else if (Shape == ShapeType.Polygon)
             {
 
             }
@@ -666,7 +671,7 @@ namespace Paint.UI
         {
             previousShape = Shape;
             previousPrompt = tssPrompt.Text;
-            Shape = Shape.Point;
+            Shape = ShapeType.Point;
             tssPrompt.Text = "Pick a point to get corlor";
             // picBoard.Cursor= new Cursor(Resources.Resource.ResourceManager.GetString(Resources.Resource.DigitalPencil))
 
@@ -686,7 +691,7 @@ namespace Paint.UI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (Shape == Shape.Polygon)
+                if (Shape == ShapeType.Polygon)
                 {
 
                     GraphicsPath gpath = new GraphicsPath();

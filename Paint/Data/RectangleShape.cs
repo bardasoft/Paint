@@ -11,7 +11,7 @@ namespace Paint.Data
     class RectangleShape : Shape
     {
        internal Rectangle Rectangle { get; set; }
-        public RectangleShape(Graphics graphics, SolidBrush brush,Pen pen, Point startPoint, Point endPoint, bool isFill)
+        public RectangleShape(Graphics graphics, SolidBrush brush,Pen pen, Point startPoint, Point endPoint, bool isFill, bool isFillBorder)
         {
             this.Graphics = graphics;
             this.Brush = brush;
@@ -19,6 +19,7 @@ namespace Paint.Data
             this.StartPoint = startPoint;
             this.EndPoint = endPoint;
             this.IsFill = isFill;
+            this.IsFillBorder = isFillBorder;
             Rectangle = Utilities.GetRectangleByPoint(StartPoint, EndPoint);
 
         }
@@ -27,7 +28,10 @@ namespace Paint.Data
             if (IsFill)
             {
                 Graphics.FillRectangle(Brush, Rectangle);
-
+                if (IsFillBorder)
+                {
+                    Graphics.DrawRectangle(Pen, Rectangle);
+                }
             }
             else
             {

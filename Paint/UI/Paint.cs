@@ -84,7 +84,7 @@ namespace Paint.UI
             pen = new Pen(foreColor, float.Parse(cbxSize.Text));
             pen.LineJoin = LineJoin.Round;
             erase = new Pen(backgroundSystemColor, widthErase);
-            brush = new SolidBrush(foreColor);
+            brush = new SolidBrush(backgroundColor);
             btnForeColor.BackColor = foreColor;
             cbxLDashStyle.SelectedIndex = 0;
             btnNone.Select();
@@ -172,8 +172,6 @@ namespace Paint.UI
                 case ShapeType.Text:
                     Point eLocation = e.Location;
                     InputText inputText = new InputText();
-
-
                     Size inputSize = inputText.Size;
                     Point locationInputText = new Point(eLocation.X - 30, (int)(eLocation.Y + inputSize.Height / 2) - 50);
                     if (eLocation.X + inputSize.Width > picBoard.Width)
@@ -206,10 +204,6 @@ namespace Paint.UI
                         graphic.DrawPath(pen, gpath);
                     }
 
-
-
-
-                    //   graphic.DrawLine(pen, startPoint, endPoint);
                     break;
                 default:
                     break;
@@ -254,24 +248,14 @@ namespace Paint.UI
                 case ShapeType.Line:
                     pen.StartCap = LineCap.Flat;
                     pen.EndCap = LineCap.Flat;
-                    // graphic.DrawLine(pen, startPoint, endPoint);
                     LineShape line = new LineShape(graphic, pen, startPoint, endPoint);
                     line.Draw();
 
                     break;
 
                 case ShapeType.Rectangle:
-                    //Rectangle rectangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
-                    //if (isFill)
-                    //{
-                    //    graphic.FillRectangle(brush, rectangle);
 
-                    //}
-                    //else
-                    //{
-                    //    graphic.DrawRectangle(pen, rectangle);
-                    //}
-                    RectangleShape rectangleShape = new RectangleShape(graphic, brush, pen, startPoint, endPoint, isFill);
+                    RectangleShape rectangleShape = new RectangleShape(graphic, brush, pen, startPoint, endPoint, isFill,true);
                     rectangleShape.Draw();
                     break;
 
@@ -279,49 +263,29 @@ namespace Paint.UI
                     break;
 
                 case ShapeType.Ellipse:
-                    Rectangle rectangleElip = Utilities.GetRectangleByPoint(startPoint, endPoint);
-                    if (isFill)
-                    {
-                        graphic.FillEllipse(brush, rectangleElip);
-                    }
-                    else
-                    {
-                        graphic.DrawEllipse(pen, rectangleElip);
-                    }
+                    EllipseShape ellipseShape = new EllipseShape(graphic, brush, pen, startPoint, endPoint, isFill,true);
+                    ellipseShape.Draw();
 
                     break;
 
                 case ShapeType.Circle:
-                    // MessageBox.Show(startPoint+ endPoint.ToString());
-                    //if (startPoint != endPoint)
-                    //{
-                    //    Point center = startPoint;
-                    //    int radius = (int)Utilities.DistanceTwoPoints(startPoint, endPoint);
-                    //    Rectangle rect = new Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2);
-                    //    if (isFill)
-                    //    {
-                    //        graphic.FillEllipse(brush, rect);
-                    //    }
-                    //    else
-                    //    {
-                    //        graphic.DrawEllipse(pen, rect);
-                    //    }
 
-                    //}
-                    CircleShape circleShape = new CircleShape(graphic, brush, pen, startPoint, endPoint, isFill);
+                    CircleShape circleShape = new CircleShape(graphic, brush, pen, startPoint, endPoint, isFill,true);
                     circleShape.Draw();
 
                     break;
                 case ShapeType.Arrow:
                     pen.StartCap = LineCap.Flat;
                     pen.EndCap = LineCap.ArrowAnchor;
-                    graphic.DrawLine(pen, startPoint, endPoint);
+                    LineShape lineArrow = new LineShape(graphic, pen, startPoint, endPoint);
+                    lineArrow.Draw();
 
                     break;
                 case ShapeType.DoubleArrow:
                     pen.StartCap = LineCap.ArrowAnchor;
                     pen.EndCap = LineCap.ArrowAnchor;
-                    graphic.DrawLine(pen, startPoint, endPoint);
+                    LineShape lineDoubleArrow = new LineShape(graphic, pen, startPoint, endPoint);
+                    lineDoubleArrow.Draw();
                     break;
                 case ShapeType.Triangle:
                     pen.StartCap = LineCap.Triangle;
@@ -496,7 +460,7 @@ namespace Paint.UI
         {
             Shape = ShapeType.DoubleArrow;
         }
-        private void btbTriangle_Click(object sender, EventArgs e)
+        private void btnTriangle_Click(object sender, EventArgs e)
         {
             Shape = ShapeType.Triangle;
 
@@ -518,7 +482,6 @@ namespace Paint.UI
             {
                 foreColor = colorDialog.Color;
                 pen.Color = foreColor;
-                brush.Color = foreColor;
                 btnForeColor.BackColor = foreColor;
             }
         }
@@ -529,9 +492,10 @@ namespace Paint.UI
             if (dialogResult == DialogResult.OK)
             {
                 backgroundColor = colorDialog.Color;
-                //pen.Color = foreColor;
-                //brush.Color = foreColor;
-                //btnForeColor.BackColor = foreColor;
+
+                brush.Color = backgroundColor;
+             
+                btnBackgroundColor.BackColor = backgroundColor;
             }
         }
         private void btnNew_Click(object sender, EventArgs e)
@@ -632,9 +596,9 @@ namespace Paint.UI
             {
                 Point point = set_Point(picBoard, e.Location);
                 Color color = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
-                if (color != pen.Color/*GetColorAt(e.X, e.Y) != pen.Color*/)
+                if (color != brush.Color/*GetColorAt(e.X, e.Y) != pen.Color*/)
                 {
-                    Fill(bitmap, point.X, point.Y, pen.Color);
+                    Fill(bitmap, point.X, point.Y, brush.Color);
                 // Utilities. FillArea(bitmap, point.X, point.Y, pen.Color);
                     picBoard.Refresh();
                 }
@@ -644,7 +608,7 @@ namespace Paint.UI
                 Point point = set_Point(picBoard, e.Location);
                 foreColor = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
                 pen.Color = foreColor;
-                brush.Color = foreColor;
+             
                 btnForeColor.BackColor = foreColor;
                 Shape = previousShape;
                 tssPrompt.Text = previousPrompt;
@@ -663,7 +627,6 @@ namespace Paint.UI
             Point point = set_Point(pic, e.Location);
             Color color = ((Bitmap)pic.Image).GetPixel(point.X, point.Y);
             pen.Color = color;
-            brush.Color = color;
             btnForeColor.BackColor = color;
 
         }

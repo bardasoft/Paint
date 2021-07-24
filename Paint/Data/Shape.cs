@@ -17,6 +17,7 @@ namespace Paint.Data
         internal Pen Pen { get; set; }
         internal SolidBrush Brush { get; set; }
         internal bool IsFill { get; set; }
+        internal bool IsFillBorder { get; set; }
         internal bool IsSelected { get; set; }
         internal GraphicsPath Border { get; set; }
         internal virtual void Draw()

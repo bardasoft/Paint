@@ -491,7 +491,7 @@ namespace Paint.UI
             this.btbTriangle.TabIndex = 6;
             this.btbTriangle.Text = "Triangle";
             this.btbTriangle.UseVisualStyleBackColor = true;
-            this.btbTriangle.Click += new System.EventHandler(this.btbTriangle_Click);
+            this.btbTriangle.Click += new System.EventHandler(this.btnTriangle_Click);
             // 
             // btnClear
             // 

@@ -8,12 +8,11 @@ using Paint.Common;
 
 namespace Paint.Data
 {
-    class CircleShape : Shape
+    class EllipseShape : Shape
     {
         internal Point CenterPoint { get; set; }
-        internal int Radius { get; set; }
         internal Rectangle Rectangle { get; set; }
-        public CircleShape(Graphics graphics, SolidBrush brush, Pen pen, Point startPoint, Point endPoint, bool isFill, bool isFillBorder)
+        public EllipseShape(Graphics graphics, SolidBrush brush, Pen pen, Point startPoint, Point endPoint, bool isFill , bool isFillBorder)
         {
             this.Graphics = graphics;
             this.Brush = brush;
@@ -23,8 +22,8 @@ namespace Paint.Data
             this.IsFill = isFill;
             this.IsFillBorder = isFillBorder;
             this.CenterPoint = StartPoint;
-            Radius = (int)Utilities.DistanceTwoPoints(StartPoint, EndPoint);
-            Rectangle = new Rectangle(this.CenterPoint.X - Radius, CenterPoint.Y - Radius, Radius * 2, Radius * 2);
+
+            Rectangle = Utilities.GetRectangleByPoint(StartPoint, EndPoint);
         }
         internal override void Draw()
         {
@@ -33,7 +32,7 @@ namespace Paint.Data
                 if (IsFill)
                 {
                     Graphics.FillEllipse(Brush, Rectangle);
-                    if(IsFillBorder)
+                    if (IsFillBorder)
                     {
                         Graphics.DrawEllipse(Pen, Rectangle);
                     }

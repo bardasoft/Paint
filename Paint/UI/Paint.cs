@@ -12,337 +12,365 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Paint.Common;
 using Paint.Data;
+using Paint.Core;
 
 namespace Paint.UI
 {
     public partial class frmPaint : Form
     {
+        private BufferedGraphics buffer;
+        private BufferedGraphicsContext context;
+        private List<Shape> drewShapes;
+        private Shape selectedShape;
+
         private bool paint;
         private Graphics graphic;
         private Bitmap bitmap;
         private bool filled;
         private Point startPoint;
         private Point endPoint;
+        private Point pointLocation;
         private Pen pen;
 
         private Pen erase;
         private float widthErase = 20;
         private SolidBrush brush;
-        bool isFill;
-        private ShapeType shape;
-        private ShapeType Shape
-        {
-            get { 
-                if(shape!=ShapeType.Polygon)
-                {
-                    ps.Clear();
-                }
-                return shape; 
-            }
-            set { shape = value; }
-        }
+        private bool isFill;
+        private ShapeType shapeType;
+        private ActionType currentAction;
         private ShapeType previousShape;
         private string previousPrompt;
-
-        Color foreColor;
-        Color backgroundColor;
-        Color backgroundSystemColor;
-
-        OpenFileDialog openFileDialog;
+        private Color foreColor;
+        private Color backgroundColor;
+        private Color backgroundSystemColor;
+        private OpenFileDialog openFileDialog;
         private SaveFileDialog saveFileDialog;
-        ColorDialog colorDialog;
-        private string fileFommat = ".png";
+        private ColorDialog colorDialog;
+        private const string fileFommat = ".png";
+
+        private Selection selection;
+        private CrossHair crossHair;
+
+        private bool showCrossHair;
+
         public frmPaint()
         {
             InitializeComponent();
-       cbxLDashStyle.Items.AddRange( Enum.GetNames(typeof(DashStyle)));
-
-          
-
+            cbxLDashStyle.Items.AddRange(Enum.GetNames(typeof(DashStyle)));
         }
+
         private void frmPaint_Load(object sender, EventArgs e)
         {
+            InitGraphics();
+            InitData();
+        }
+
+        private void InitGraphics()
+        {
+            //context = BufferedGraphicsManager.Current;
+            //context.MaximumBuffer = new Size(this.Width, this.Height);
+            //buffer = context.Allocate(picBoard.CreateGraphics(), picBoard.DisplayRectangle);
+            //buffer.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            bitmap = new Bitmap(picBoard.Width, picBoard.Height);
+            graphic = Graphics.FromImage(bitmap);
+            graphic.SmoothingMode = SmoothingMode.HighQuality;
+            graphic.InterpolationMode = InterpolationMode.High;
+
+            graphic.Clear(backgroundSystemColor);
+            picBoard.Image = bitmap;
+        }
+
+        private void InitData()
+        {
+            paint = false;
             isFill = false;
+            selection = new Selection(graphic);
+
             previousPrompt = string.Empty;
             openFileDialog = new OpenFileDialog()
             { };
             saveFileDialog = new SaveFileDialog();
             colorDialog = new ColorDialog();
-            paint = false;
+
             foreColor = Color.Black;
             backgroundSystemColor = Color.White;
-            bitmap = new Bitmap(picBoard.Width, picBoard.Height);
-
-            graphic = Graphics.FromImage(bitmap);
-            graphic.SmoothingMode = SmoothingMode.HighQuality;
-            graphic.InterpolationMode = InterpolationMode.High;
-
-
-            graphic.Clear(backgroundSystemColor);
-            picBoard.Image = bitmap;
 
             pen = new Pen(foreColor, float.Parse(cbxSize.Text));
             pen.LineJoin = LineJoin.Round;
             erase = new Pen(backgroundSystemColor, widthErase);
             brush = new SolidBrush(backgroundColor);
+
+            crossHair = new CrossHair()
+            {
+                Frame = new Rectangle(0, 0, picBoard.Width, picBoard.Height)
+            };
+            showCrossHair = true;
             btnForeColor.BackColor = foreColor;
             cbxLDashStyle.SelectedIndex = 0;
             btnNone.Select();
-
+            currentAction = ActionType.Select;
         }
 
         private void picBoard_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
             startPoint = e.Location;
+            switch (currentAction)
+            {
+                case ActionType.Select:
+                    selection.MouseDownSelect(startPoint);
+                    break;
+
+                case ActionType.Draw:
+                    break;
+
+                case ActionType.Drawing:
+                    break;
+
+                case ActionType.Zoom:
+                    break;
+
+                default:
+                    break;
+            }
+            //switch (currentAction)
+            //{
+            //    case ActionType.Select:
+            //        MouseDown_Select(e.Location);
+            //        break;
+            //    //case ActionType.Draw:
+            //    //    AddShape();
+            //    //    Drawshapes[Drawshapes.Count - 1].StartPoint = e.Location;
+            //    //    Drawshapes[Drawshapes.Count - 1].AddPoint(e.Location);
+            //    //    Drawshapes[Drawshapes.Count - 1].AddPoint(e.Location);
+            //    //   currentAction = ActionType.Drawing;
+            //    //    break;
+            //    case ActionType.Drawing:
+            //        MouseDown_Drawing(e);
+            //        break;
+            //}
         }
 
         private void picBoard_MouseMove(object sender, MouseEventArgs e)
         {
             tssCoordinate.Text = $"{e.X}, {e.Y}px";
+
+            pointLocation = e.Location;
+
             if (paint)
             {
                 endPoint = e.Location;
-
-                switch (Shape)
+                switch (currentAction)
                 {
-                    case ShapeType.None:
-                        break;
-
-                    case ShapeType.Free:
-                        pen.LineJoin = LineJoin.Round;
-                        pen.StartCap = LineCap.Flat;
-                        pen.EndCap = LineCap.Flat;
-                        graphic.DrawLine(pen, startPoint, endPoint);
-                        startPoint = endPoint;
-                        break;
-
-                    case ShapeType.Erase:
-                        pen.LineJoin = LineJoin.Round;
-                        pen.StartCap = LineCap.Flat;
-                        pen.EndCap = LineCap.Flat;
-                        graphic.DrawLine(erase, startPoint, endPoint);
-                        startPoint = endPoint;
-                        break;
-
-                    case ShapeType.Line:
+                    case ActionType.Select:
+                        // selection.MouseMoveSelect(endPoint);
 
                         break;
 
-                    case ShapeType.Rectangle:
-                        break;
-
-                    case ShapeType.Square:
-                        break;
-
-                    case ShapeType.Ellipse:
-                        break;
-
-                    case ShapeType.Circle:
-                        break;
-
-                    case ShapeType.Triangle:
-                        break;
-
-                    case ShapeType.Petagon:
-                        break;
-
-                    case ShapeType.Hecxagon:
-                        break;
-
-                    case ShapeType.Fill:
-                        break;
-
-                    default:
+                    case ActionType.Drawing:
+                        // MouseMove_Drawing(e.Location);
                         break;
                 }
-                picBoard.Refresh();//call paint
             }
+
+            // endPoint = e.Location;
+
+            //switch (Shape)
+            //{
+            //    case ShapeType.None:
+            //        break;
+
+            //    case ShapeType.Free:
+            //        pen.LineJoin = LineJoin.Round;
+            //        pen.StartCap = LineCap.Flat;
+            //        pen.EndCap = LineCap.Flat;
+            //        graphic.DrawLine(pen, startPoint, endPoint);
+            //        startPoint = endPoint;
+            //        break;
+
+            //    case ShapeType.Erase:
+            //        pen.LineJoin = LineJoin.Round;
+            //        pen.StartCap = LineCap.Flat;
+            //        pen.EndCap = LineCap.Flat;
+            //        graphic.DrawLine(erase, startPoint, endPoint);
+            //        startPoint = endPoint;
+            //        break;
+
+            //    case ShapeType.Line:
+
+            //        break;
+
+            //    case ShapeType.Rectangle:
+            //        break;
+
+            //    case ShapeType.Square:
+            //        break;
+
+            //    case ShapeType.Ellipse:
+            //        break;
+
+            //    case ShapeType.Circle:
+            //        break;
+
+            //    case ShapeType.Triangle:
+            //        break;
+
+            //    case ShapeType.Petagon:
+            //        break;
+
+            //    case ShapeType.Hecxagon:
+            //        break;
+
+            //    case ShapeType.Fill:
+            //        break;
+
+            //    default:
+            //        break;
+            //}
+            picBoard.Refresh();//call paint
         }
 
-        List<Point> ps = new List<Point>();
         private void picBoard_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
             endPoint = e.Location;
-            Paint(graphic, Shape);
-
-            switch (Shape)
+            switch (currentAction)
             {
-                case ShapeType.Text:
-                    Point eLocation = e.Location;
-                    InputText inputText = new InputText();
-                    Size inputSize = inputText.Size;
-                    Point locationInputText = new Point(eLocation.X - 30, (int)(eLocation.Y + inputSize.Height / 2) - 50);
-                    if (eLocation.X + inputSize.Width > picBoard.Width)
-                    {
-                        locationInputText.X = picBoard.Width - inputSize.Width;
-                    }
-                    if (eLocation.Y + inputSize.Height > picBoard.Height)
-                    {
-                        locationInputText.Y = picBoard.Height - inputSize.Height + 100;
+                case ActionType.Select:
 
-                    }
-                    inputText.Location = locationInputText;
-                    if (inputText.ShowDialog() == DialogResult.OK)
-                    {
-                        graphic.DrawString(inputText.InputString, new Font("Arial", 12), brush, endPoint);
-                    }
+                    // picBoard.Refresh();
+                    //buffer.Render();
                     break;
-                case ShapeType.Polygon:
-                    pen.StartCap = LineCap.Flat;
-                    pen.EndCap = LineCap.Flat;
 
-                    GraphicsPath gpath = new GraphicsPath();
-                    if(!ps.Contains(e.Location))
-                    {
-                        ps.Add(e.Location);
-                    }
-                    if (ps.Count >=2)
-                    {
-                        gpath.AddCurve(ps.ToArray(), 0);
-                        graphic.DrawPath(pen, gpath);
-                    }
-
+                case ActionType.Draw:
                     break;
+
+                case ActionType.Drawing:
+                    break;
+
+                case ActionType.Zoom:
+                    break;
+
                 default:
                     break;
             }
-
-            picBoard.Refresh();//call paint
         }
 
+        private void MouseMove_Drawing(Point eLocation)
+        {
+            if (drewShapes.Count <= 0) return;
+
+            //Cập nhật các điểm để vẽ
+            //Hình dáng mouse
+            // pnlPaint.Cursor = Cursors.Cross;
+            //Đối với cách hình thông thường
+            //if (MyShape != SHAPES.CURVE && MyShape != SHAPES.POLYGON && MyShape != SHAPES.CLOSEDCURVE)
+            //    DrawObj[DrawObj.Count - 1].AddPoint(eLocation);
+            //Đối với Curve và Polygon
+            //else
+            //{
+            //    if (MyShape == SHAPES.CURVE)
+            //    {
+            //        var shape = (DrawObj[DrawObj.Count - 1] as MyCurve);
+            //        int i = shape.LPoints.Count;
+            //        shape.LPoints[i - 1] = eLocation;
+            //    }
+            //    else if (MyShape == SHAPES.POLYGON)
+            //    {
+            //        var shape = (DrawObj[DrawObj.Count - 1] as MyPolygon);
+            //        int i = shape.LPoints.Count;
+            //        shape.LPoints[i - 1] = eLocation;
+            //    }
+            //    else if (MyShape == SHAPES.CLOSEDCURVE)
+            //    {
+            //        var shape = (DrawObj[DrawObj.Count - 1] as MyClosedCurve);
+            //        int i = shape.LPoints.Count;
+            //        shape.LPoints[i - 1] = eLocation;
+            //    }
+            //}
+            RePaint();
+        }
+
+        private void MouseDown_Drawing(MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    if (drewShapes.Count < 1) return;
+                    drewShapes[drewShapes.Count - 1].AddPoint(e.Location);
+                    break;
+
+                case MouseButtons.Right:
+                    currentAction = ActionType.Draw;
+                    break;
+            }
+        }
+
+        private List<Point> ps = new List<Point>();
 
         private void picBoard_Paint(object sender, PaintEventArgs e)
         {
             var paintGraphic = e.Graphics;
 
-            Paint(paintGraphic, Shape);
+            switch (currentAction)
+            {
+                case ActionType.Select:
+                    selection.graphics = paintGraphic;
+                    selection.MouseMoveSelect(endPoint);
 
+                    break;
 
+                case ActionType.Drawing:
+                    // MouseMove_Drawing(e.Location);
+                    break;
+            }
 
+            if (showCrossHair)
+            {
+                crossHair.Draw(paintGraphic, pointLocation);
+            }
 
-            // TextFormatFlags flags = TextFormatFlags.Bottom | TextFormatFlags.EndEllipsis;
-            //TextRenderer.DrawText(e.Graphics, "This is some text that will be clipped at the end.", this.Font,
-            //  new Rectangle(10, 10, 300, 50), SystemColors.ControlText/*, flags*/);
+            // Paint(paintGraphic, Shape);
         }
 
         private new void Paint(Graphics graphic, ShapeType shape)
         {
+        }
 
-            switch (shape)
+        private void MouseDown_Select(Point point)
+        {
+        }
+
+        private void RePaint()
+        {
+            using (Brush brush = new SolidBrush(Color.White))
             {
-                case ShapeType.None:
-                    break;
-
-                case ShapeType.Free:
-                    //graphic.DrawLine(pen, startPoint, endPoint);
-                    //startPoint = endPoint;
-                    break;
-
-                case ShapeType.Erase:
-                    // graphic.DrawLine(erase, startPoint, endPoint);
-                    // startPoint = endPoint;
-                    break;
-
-                case ShapeType.Line:
-                    pen.StartCap = LineCap.Flat;
-                    pen.EndCap = LineCap.Flat;
-                    LineShape line = new LineShape(graphic, pen, startPoint, endPoint);
-                    line.Draw();
-
-                    break;
-
-                case ShapeType.Rectangle:
-
-                    RectangleShape rectangleShape = new RectangleShape(graphic, brush, pen, startPoint, endPoint, isFill,true);
-                    rectangleShape.Draw();
-                    break;
-
-                case ShapeType.Square:
-                    break;
-
-                case ShapeType.Ellipse:
-                    EllipseShape ellipseShape = new EllipseShape(graphic, brush, pen, startPoint, endPoint, isFill,true);
-                    ellipseShape.Draw();
-
-                    break;
-
-                case ShapeType.Circle:
-
-                    CircleShape circleShape = new CircleShape(graphic, brush, pen, startPoint, endPoint, isFill,true);
-                    circleShape.Draw();
-
-                    break;
-                case ShapeType.Arrow:
-                    pen.StartCap = LineCap.Flat;
-                    pen.EndCap = LineCap.ArrowAnchor;
-                    LineShape lineArrow = new LineShape(graphic, pen, startPoint, endPoint);
-                    lineArrow.Draw();
-
-                    break;
-                case ShapeType.DoubleArrow:
-                    pen.StartCap = LineCap.ArrowAnchor;
-                    pen.EndCap = LineCap.ArrowAnchor;
-                    LineShape lineDoubleArrow = new LineShape(graphic, pen, startPoint, endPoint);
-                    lineDoubleArrow.Draw();
-                    break;
-                case ShapeType.Triangle:
-                    pen.StartCap = LineCap.Triangle;
-                    pen.EndCap = LineCap.Triangle;
-                    GraphicsPath trianglePath = new GraphicsPath();
-                    Rectangle rectangleTriangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
-                    Point pointLeft = new Point(rectangleTriangle.X, rectangleTriangle.Bottom);
-                    Point pointRight = new Point(rectangleTriangle.Right, rectangleTriangle.Bottom);
-                    Point pointTop = new Point((rectangleTriangle.X + rectangleTriangle.Right) / 2, rectangleTriangle.Y);
-
-                    trianglePath.AddCurve(new Point[] { pointLeft, pointRight, pointTop, pointLeft }, 0);
-                    if (isFill)
-                    {
-                        graphic.FillPath(brush, trianglePath);
-                    }
-                    else
-                    {
-                        graphic.DrawPath(pen, trianglePath);
-                    }
-
-                    break;
-                case ShapeType.RightTriangle:
-                    pen.StartCap = LineCap.Triangle;
-                    pen.EndCap = LineCap.Triangle;
-                    GraphicsPath RightTrianglePath = new GraphicsPath();
-                    Rectangle rectangleRightTriangle = Utilities.GetRectangleByPoint(startPoint, endPoint);
-                    Point pointLeft1 = new Point(rectangleRightTriangle.X, rectangleRightTriangle.Bottom);
-                    Point pointRight1 = new Point(rectangleRightTriangle.Right, rectangleRightTriangle.Bottom);
-                    Point pointTopRight1 = new Point(rectangleRightTriangle.X, rectangleRightTriangle.Y);
-
-                    RightTrianglePath.AddCurve(new Point[] { pointLeft1, pointRight1, pointTopRight1, pointLeft1 }, 0);
-                    if (isFill)
-                    {
-                        graphic.FillPath(brush, RightTrianglePath);
-                    }
-                    else
-                    {
-                        graphic.DrawPath(pen, RightTrianglePath);
-                    }
-                    break;
-                case ShapeType.Polygon:
-                    break;
-                case ShapeType.Petagon:
-                    break;
-
-                case ShapeType.Hecxagon:
-                    break;
-
-                case ShapeType.Fill:
-                    break;
-                case ShapeType.Text:
-                    break;
-
-                default:
-                    break;
+                buffer.Graphics.FillRectangle(brush, 0, 0, picBoard.Width, picBoard.Height);
+                drewShapes.ForEach(shape => shape.Draw(buffer.Graphics));
+                //if (IsDrawRegion)
+                //    using (Pen pen = new Pen(Color.Black) { DashStyle = DashStyle.Dash })
+                //    {
+                //        Gp.Graphics.DrawRectangle(pen, SelectedRegion);
+                //    }
+                picBoard.Focus();
+                buffer.Render();
             }
+        }
 
+        private Shape SelectShape(Point p)
+        {
+            int index = -1;
+            for (int i = 0; i < drewShapes.Count; i++)
+            {
+                drewShapes[i].IsSelected = false;
+                if (drewShapes[i].Select(p))
+                {
+                    drewShapes[i].IsSelected = true;
+                    index = i;
+                }
+            }
+            return index >= 0 ? drewShapes[index] : null;
         }
 
         private void picBoard_SizeChanged(object sender, EventArgs e)
@@ -357,9 +385,8 @@ namespace Paint.UI
             //  picBoard.Image = newbitmap;
             // picBoard.Image = bitmap;
             //graphic.Clear(Color.White);
-
-
         }
+
         public Bitmap ResizeBitmap(Bitmap bmp, int width, int height)
         {
             Bitmap result = new Bitmap(width, height);
@@ -370,52 +397,31 @@ namespace Paint.UI
 
             return result;
         }
-        //void XX(float width, float height)
-        //{
-
-        //    var brush = new SolidBrush(Color.Black);
-        //    var image = new Bitmap(picBoard.Image);
-        //    float scale = Math.Min(width / image.Width, height / image.Height);
-        //    var bmp = new Bitmap((int)width, (int)height);
-        //    var graph = Graphics.FromImage(bmp);
-
-        //    // uncomment for higher quality output
-        //    //graph.InterpolationMode = InterpolationMode.High;
-        //    //graph.CompositingQuality = CompositingQuality.HighQuality;
-        //    //graph.SmoothingMode = SmoothingMode.AntiAlias;
-
-        //    var scaleWidth = (int)(image.Width * scale);
-        //    var scaleHeight = (int)(image.Height * scale);
-
-        //    graph.FillRectangle(brush, new RectangleF(0, 0, width, height));
-        //    graph.DrawImage(image, ((int)width - scaleWidth) / 2, ((int)height - scaleHeight) / 2, scaleWidth, scaleHeight);
-
-        //}
 
         private void btnNone_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.None;
+            shapeType = ShapeType.None;
             tssPrompt.Text = string.Empty;
-
         }
+
         private void btnLine_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Line;
+            shapeType = ShapeType.Line;
             tssPrompt.Text = "Pick and hold 2 points";
         }
 
         private void btnFree_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Free;
+            shapeType = ShapeType.Free;
             //    picBoard.Cursor = new Cursor();
             tssPrompt.Text = "Hold your mouse";
         }
+
         private void btnErase_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Erase;
+            shapeType = ShapeType.Erase;
             //  picBoard.Cursor = new Cursor(@"D:\Libraries\Icons\eraser.ico");
             tssPrompt.Text = "Hold your mouse";
-
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -426,57 +432,61 @@ namespace Paint.UI
 
         private void btnRectangle_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Rectangle;
+            shapeType = ShapeType.Rectangle;
             tssPrompt.Text = "Pick and hold 2 points";
-
         }
 
         private void btnEllipse_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Ellipse;
+            shapeType = ShapeType.Ellipse;
             tssPrompt.Text = "Pick and hold 2 points";
         }
+
         private void btnCircle_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Circle;
+            shapeType = ShapeType.Circle;
             tssPrompt.Text = "Pick a center point and hold your mouse to set radius";
         }
+
         private void btnText_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Text;
+            shapeType = ShapeType.Text;
             tssPrompt.Text = "Pick a point to place text";
         }
+
         private void btnFill_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Fill;
+            shapeType = ShapeType.Fill;
             tssPrompt.Text = "Pick a point to fill an are";
         }
+
         private void btnArrow_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Arrow;
+            shapeType = ShapeType.Arrow;
         }
 
         private void btnDoubleArrow_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.DoubleArrow;
+            shapeType = ShapeType.DoubleArrow;
         }
+
         private void btnTriangle_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Triangle;
-
+            shapeType = ShapeType.Triangle;
         }
+
         private void btnRightTriangle_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.RightTriangle;
-
+            shapeType = ShapeType.RightTriangle;
         }
+
         private void btnPolygon_Click(object sender, EventArgs e)
         {
-            Shape = ShapeType.Polygon;
+            shapeType = ShapeType.Polygon;
         }
+
         private void btnForeColor_Click(object sender, EventArgs e)
         {
-
             DialogResult dialogResult = colorDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
@@ -485,23 +495,25 @@ namespace Paint.UI
                 btnForeColor.BackColor = foreColor;
             }
         }
+
         private void btnBackgroundColor_Click(object sender, EventArgs e)
         {
-
             DialogResult dialogResult = colorDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
                 backgroundColor = colorDialog.Color;
 
                 brush.Color = backgroundColor;
-             
+
                 btnBackgroundColor.BackColor = backgroundColor;
             }
         }
+
         private void btnNew_Click(object sender, EventArgs e)
         {
             btnClear_Click(sender, e);
         }
+
         private void btnOpen_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -518,12 +530,12 @@ namespace Paint.UI
                 }
                 catch (Exception ex)
                 {
-
                     MessageBox.Show(ex.Message);
                 }
                 btnNone_Click(sender, e);
             }
         }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -536,10 +548,12 @@ namespace Paint.UI
         {
             pen.Width = float.Parse(cbxSize.Text);
         }
+
         private void cbxLDashStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
             pen.DashStyle = Enum.Parse<DashStyle>(cbxLDashStyle.SelectedItem.ToString());
         }
+
         private static Point set_Point(PictureBox pb, Point pt)
         {
             float px = 1f * pb.Width / pb.Width;
@@ -592,33 +606,30 @@ namespace Paint.UI
 
         private void picBoard_MouseClick(object sender, MouseEventArgs e)
         {
-            if (Shape == ShapeType.Fill)
+            if (shapeType == ShapeType.Fill)
             {
                 Point point = set_Point(picBoard, e.Location);
                 Color color = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
                 if (color != brush.Color/*GetColorAt(e.X, e.Y) != pen.Color*/)
                 {
                     Fill(bitmap, point.X, point.Y, brush.Color);
-                // Utilities. FillArea(bitmap, point.X, point.Y, pen.Color);
+                    // Utilities. FillArea(bitmap, point.X, point.Y, pen.Color);
                     picBoard.Refresh();
                 }
             }
-            else if (Shape == ShapeType.Point)
+            else if (shapeType == ShapeType.Point)
             {
                 Point point = set_Point(picBoard, e.Location);
                 foreColor = ((Bitmap)picBoard.Image).GetPixel(point.X, point.Y);
                 pen.Color = foreColor;
-             
+
                 btnForeColor.BackColor = foreColor;
-                Shape = previousShape;
+                shapeType = previousShape;
                 tssPrompt.Text = previousPrompt;
-
             }
-            else if (Shape == ShapeType.Polygon)
+            else if (shapeType == ShapeType.Polygon)
             {
-
             }
-
         }
 
         private void picColor_MouseClick(object sender, MouseEventArgs e)
@@ -628,16 +639,15 @@ namespace Paint.UI
             Color color = ((Bitmap)pic.Image).GetPixel(point.X, point.Y);
             pen.Color = color;
             btnForeColor.BackColor = color;
-
         }
+
         private void btnColorPicker_Click(object sender, EventArgs e)
         {
-            previousShape = Shape;
+            previousShape = shapeType;
             previousPrompt = tssPrompt.Text;
-            Shape = ShapeType.Point;
+            shapeType = ShapeType.Point;
             tssPrompt.Text = "Pick a point to get corlor";
             // picBoard.Cursor= new Cursor(Resources.Resource.ResourceManager.GetString(Resources.Resource.DigitalPencil))
-
         }
 
         private void chkFill_CheckedChanged(object sender, EventArgs e)
@@ -647,20 +657,18 @@ namespace Paint.UI
 
         private void frmPaint_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void frmPaint_KeyUp(object sender, KeyEventArgs e)
         {
+            tssCommand.Text = e.KeyCode.ToString();
             if (e.KeyCode == Keys.Enter)
             {
-                if (Shape == ShapeType.Polygon)
+                if (shapeType == ShapeType.Polygon)
                 {
-
                     GraphicsPath gpath = new GraphicsPath();
-                    if(ps.Count>2)
+                    if (ps.Count > 2)
                     {
-                      
                         gpath.AddClosedCurve(ps.ToArray(), 0);
                         if (isFill)
                         {
@@ -672,15 +680,25 @@ namespace Paint.UI
                         }
                         ps.Clear();
 
-
                         picBoard.Invalidate();
                     }
-                   
                 }
             }
-
         }
 
-       
+        private void picBoard_MouseLeave(object sender, EventArgs e)
+        {
+            //Cursor.Show();
+        }
+
+        private void chkShowCrossHair_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkShowCrossHair.Checked)
+            {
+                showCrossHair = true;
+            }
+            else
+                showCrossHair = false;
+        }
     }
 }

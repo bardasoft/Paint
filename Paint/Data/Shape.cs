@@ -1,17 +1,11 @@
 ﻿using Paint.Common;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paint.Data
 {
     internal abstract class Shape
     {
-        internal Graphics Graphics { get; set; }
         internal ShapeType ShapeType { get; set; }
         internal Point StartPoint { get; set; }
         internal Point EndPoint { get; set; }
@@ -25,15 +19,21 @@ namespace Paint.Data
 
         public Shape()
         {
-
+            Init();
         }
 
         public Shape(Pen pen, Brush brush)
         {
+            Init();
             this.Pen = pen;
             this.Brush = brush;
-
         }
+
+        private void Init()
+        {
+            GraphicsPath = new GraphicsPath();
+        }
+
         internal virtual bool Select(Point point)
         {
             if (IsFilled)
@@ -42,29 +42,35 @@ namespace Paint.Data
             }
             else
             {
-              return   GraphicsPath.IsOutlineVisible(point, this. Pen);
+                return GraphicsPath.IsOutlineVisible(point, this.Pen);
             }
         }
-        protected void MovePoint(Point oldOriginPoint,Point newOriginPoint)
+
+        protected void MovePoint(Point oldOriginPoint, Point newOriginPoint)
         {
             int dX = newOriginPoint.X - oldOriginPoint.X;
             int dy = newOriginPoint.Y - oldOriginPoint.Y;
 
             StartPoint = new Point(StartPoint.X + dX, StartPoint.Y + dy);
             EndPoint = new Point(EndPoint.X + dX, EndPoint.Y + dy);
-
-
         }
+
         protected Rectangle DetectBound()
         {
             return Utilities.GetRectangleByPoint(StartPoint, EndPoint);
         }
-        internal virtual void Draw()
-        { }
-        internal virtual void Selected()
-        {
 
-        }
+        #region Abtract methods
+
+        internal abstract void Draw(Graphics graphics);
+
+        public abstract void AddPoint(Point p);
+
+        public abstract void SelectPoint(Point eLocation);
+
+        public abstract void Move(Point firstPoint, Point eLocation);
+
+        #endregion Abtract methods
 
         public enum Edge
         {

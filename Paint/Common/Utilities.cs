@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paint.Common
 {
-    static class Utilities
+    internal static class Utilities
     {
         internal static Point GetMinPoint(Point point1, Point point2)
         {
@@ -40,7 +36,7 @@ namespace Paint.Common
             int width = bitmap.Width;
             int height = bitmap.Height;
 
-            if (x < 0 || x > width-1 || y < 0 || y > height-1) return;
+            if (x < 0 || x > width - 1 || y < 0 || y > height - 1) return;
             if (oldColor != newColor)
             {
                 bitmap.SetPixel(x, y, newColor);
@@ -48,11 +44,7 @@ namespace Paint.Common
                 FillArea(bitmap, x - 1, y, newColor);
                 FillArea(bitmap, x, y + 1, newColor);
                 FillArea(bitmap, x, y - 1, newColor);
-
-
             }
-
-
         }
     }
 }

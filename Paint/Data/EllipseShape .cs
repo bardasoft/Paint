@@ -8,40 +8,56 @@ using Paint.Common;
 
 namespace Paint.Data
 {
-    class EllipseShape : Shape
+    internal class EllipseShape// : Shape
     {
-        internal Point CenterPoint { get; set; }
-        internal Rectangle Rectangle { get; set; }
-        public EllipseShape(Graphics graphics, SolidBrush brush, Pen pen, Point startPoint, Point endPoint, bool isFill , bool isFillBorder)
-        {
-            this.Graphics = graphics;
-            this.Brush = brush;
-            this.Pen = pen;
-            this.StartPoint = startPoint;
-            this.EndPoint = endPoint;
-            this.IsFilled = isFill;
-            this.IsDrawBorder = isFillBorder;
-            this.CenterPoint = StartPoint;
+        //    internal Point CenterPoint { get; set; }
+        //    internal Rectangle Rectangle { get; set; }
 
-            Rectangle = Utilities.GetRectangleByPoint(StartPoint, EndPoint);
-        }
-        internal override void Draw()
-        {
-            if (StartPoint != EndPoint)
-            {
-                if (IsFilled)
-                {
-                    Graphics.FillEllipse(Brush, Rectangle);
-                    if (IsDrawBorder)
-                    {
-                        Graphics.DrawEllipse(Pen, Rectangle);
-                    }
-                }
-                else
-                {
-                    Graphics.DrawEllipse(Pen, Rectangle);
-                }
-            }
-        }
+        //    public EllipseShape(SolidBrush brush, Pen pen, Point startPoint, Point endPoint, bool isFill, bool isFillBorder)
+        //    {
+        //        this.Brush = brush;
+        //        this.Pen = pen;
+        //        this.StartPoint = startPoint;
+        //        this.EndPoint = endPoint;
+        //        this.IsFilled = isFill;
+        //        this.IsDrawBorder = isFillBorder;
+        //        this.CenterPoint = StartPoint;
+
+        //        Rectangle = Utilities.GetRectangleByPoint(StartPoint, EndPoint);
+        //    }
+
+        //    internal override void Draw(Graphics graphics)
+        //    {
+        //        if (StartPoint != EndPoint)
+        //        {
+        //            if (IsFilled)
+        //            {
+        //                graphics.FillEllipse(Brush, Rectangle);
+        //                if (IsDrawBorder)
+        //                {
+        //                    graphics.DrawEllipse(Pen, Rectangle);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                graphics.DrawEllipse(Pen, Rectangle);
+        //            }
+        //        }
+        //    }
+
+        //    public override void SelectPoint(Point eLocation)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    public override void Move(Point firstPoint, Point eLocation)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    public override void AddPoint(Point p)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
     }
 }

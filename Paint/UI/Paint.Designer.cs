@@ -31,7 +31,7 @@ namespace Paint.UI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPaint));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
@@ -65,13 +65,19 @@ namespace Paint.UI
             this.btnNone = new System.Windows.Forms.Button();
             this.chkFill = new System.Windows.Forms.CheckBox();
             this.btnErase = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.chkShowCrossHair = new System.Windows.Forms.CheckBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.picBoard = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSplitButton2 = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssCommand = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssPrompt = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -79,6 +85,9 @@ namespace Paint.UI
             ((System.ComponentModel.ISupportInitialize)(this.picColor)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoard)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -88,7 +97,7 @@ namespace Paint.UI
             this.tableLayoutPanel1.AutoSize = true;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tabMain, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.picBoard, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -100,17 +109,18 @@ namespace Paint.UI
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1222, 579);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // tabControl1
+            // tabMain
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1222, 100);
-            this.tabControl1.TabIndex = 4;
+            this.tabMain.Controls.Add(this.tabPage1);
+            this.tabMain.Controls.Add(this.tabPage2);
+            this.tabMain.Controls.Add(this.tabPage3);
+            this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabMain.Location = new System.Drawing.Point(0, 0);
+            this.tabMain.Margin = new System.Windows.Forms.Padding(0);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.SelectedIndex = 0;
+            this.tabMain.Size = new System.Drawing.Size(1222, 100);
+            this.tabMain.TabIndex = 4;
             // 
             // tabPage1
             // 
@@ -118,7 +128,7 @@ namespace Paint.UI
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1481, 72);
+            this.tabPage1.Size = new System.Drawing.Size(1214, 72);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "File";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -141,7 +151,7 @@ namespace Paint.UI
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1481, 72);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1214, 72);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // btnSave
@@ -637,6 +647,40 @@ namespace Paint.UI
             this.btnErase.UseVisualStyleBackColor = true;
             this.btnErase.Click += new System.EventHandler(this.btnErase_Click);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.chkShowCrossHair);
+            this.tabPage3.Controls.Add(this.splitContainer1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1214, 72);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "View";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // chkShowCrossHair
+            // 
+            this.chkShowCrossHair.AutoSize = true;
+            this.chkShowCrossHair.Checked = true;
+            this.chkShowCrossHair.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkShowCrossHair.Location = new System.Drawing.Point(121, 6);
+            this.chkShowCrossHair.Name = "chkShowCrossHair";
+            this.chkShowCrossHair.Size = new System.Drawing.Size(77, 19);
+            this.chkShowCrossHair.TabIndex = 1;
+            this.chkShowCrossHair.Text = "CrossHair";
+            this.chkShowCrossHair.UseVisualStyleBackColor = true;
+            this.chkShowCrossHair.CheckedChanged += new System.EventHandler(this.chkShowCrossHair_CheckedChanged);
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Cursor = System.Windows.Forms.Cursors.VSplit;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Size = new System.Drawing.Size(112, 66);
+            this.splitContainer1.SplitterDistance = 25;
+            this.splitContainer1.TabIndex = 0;
+            // 
             // picBoard
             // 
             this.picBoard.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -650,6 +694,7 @@ namespace Paint.UI
             this.picBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.picBoard_Paint);
             this.picBoard.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picBoard_MouseClick);
             this.picBoard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBoard_MouseDown);
+            this.picBoard.MouseLeave += new System.EventHandler(this.picBoard_MouseLeave);
             this.picBoard.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picBoard_MouseMove);
             this.picBoard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picBoard_MouseUp);
             // 
@@ -657,7 +702,10 @@ namespace Paint.UI
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssCoordinate,
-            this.toolStripSplitButton2,
+            this.toolStripStatusLabel2,
+            this.toolStripStatusLabel1,
+            this.tssCommand,
+            this.toolStripStatusLabel3,
             this.tssPrompt});
             this.statusStrip1.Location = new System.Drawing.Point(0, 557);
             this.statusStrip1.Name = "statusStrip1";
@@ -672,14 +720,29 @@ namespace Paint.UI
             this.tssCoordinate.Size = new System.Drawing.Size(66, 22);
             this.tssCoordinate.Text = "Coordinate";
             // 
-            // toolStripSplitButton2
+            // toolStripStatusLabel2
             // 
-            this.toolStripSplitButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSplitButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton2.Image")));
-            this.toolStripSplitButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton2.Name = "toolStripSplitButton2";
-            this.toolStripSplitButton2.Size = new System.Drawing.Size(26, 20);
-            this.toolStripSplitButton2.Text = "|";
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusLabel2.Text = "|";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(70, 17);
+            this.toolStripStatusLabel1.Text = "Command :";
+            // 
+            // tssCommand
+            // 
+            this.tssCommand.Name = "tssCommand";
+            this.tssCommand.Size = new System.Drawing.Size(31, 17);
+            this.tssCommand.Text = "cmd";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusLabel3.Text = "|";
             // 
             // tssPrompt
             // 
@@ -703,7 +766,7 @@ namespace Paint.UI
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmPaint_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.frmPaint_KeyUp);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
+            this.tabMain.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -713,6 +776,10 @@ namespace Paint.UI
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picBoard)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -749,8 +816,7 @@ namespace Paint.UI
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.PictureBox picBoard;
         private System.Windows.Forms.CheckBox chkFill;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton2;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabMain;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
@@ -763,6 +829,13 @@ namespace Paint.UI
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbxLDashStyle;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel tssCommand;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.CheckBox chkShowCrossHair;
     }
 }
 

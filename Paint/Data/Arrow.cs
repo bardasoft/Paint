@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Paint.Common;
+﻿using System.Drawing;
 namespace Paint.Data
 {
     class Arrow
@@ -22,7 +14,7 @@ namespace Paint.Data
             this.pen = pen;
             this.startPoint = startPoint;
             this.endPoint = endPoint;
-            
+
             DrawArrow();
         }
         private void DrawArrow()
@@ -32,7 +24,7 @@ namespace Paint.Data
             //graphic.DrawLine(pen, p1, endPoint);
             //graphic.DrawLine(pen, startPoint, endPoint);
 
-          
+
             // Vector
         }
 

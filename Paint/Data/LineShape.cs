@@ -1,24 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
 
 namespace Paint.Data
 {
-    class LineShape : Shape
+    internal class LineShape : Shape
     {
-        public LineShape(Graphics graphics, Pen pen,Point startPoint, Point endPoint)
+        private int selectedPoint;
+
+        public LineShape(Pen pen, Brush brush) : base(pen, brush)
         {
-            this.Graphics = graphics;
-            this.Pen = pen;
-            this.StartPoint = startPoint;
-            this.EndPoint = endPoint;
+            pen.StartCap = pen.EndCap = LineCap.Flat;
         }
-        internal override void Draw()
+
+        //public LineShape( Pen pen,Point startPoint, Point endPoint)
+        //{
+        //    this.Graphics = graphics;
+        //    this.Pen = pen;
+        //    this.StartPoint = startPoint;
+        //    this.EndPoint = endPoint;
+        //}
+        internal override void Draw(Graphics graphics)
         {
-            Graphics.DrawLine(this.Pen, StartPoint, EndPoint);
+            if (StartPoint != EndPoint)
+            {
+                graphics.DrawLine(this.Pen, StartPoint, EndPoint);
+                GraphicsPath.Reset();
+                if (IsSelected)
+                {
+                    Brush brush = new SolidBrush(Color.Blue);
+                    graphics.FillRectangle(brush, StartPoint.X - 3, StartPoint.Y - 3, 6, 6);
+                    graphics.FillRectangle(brush, EndPoint.X - 3, EndPoint.Y - 3, 6, 6);
+                }
+            }
+        }
+
+        public override void Move(Point firstPoint, Point eLocation)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SelectPoint(Point point)
+        {
+            double d1 = Math.Pow(point.X - StartPoint.X, 2) + Math.Pow(point.Y - StartPoint.Y, 2);
+            double d2 = Math.Pow(point.X - EndPoint.X, 2) + Math.Pow(point.Y - EndPoint.Y, 2);
+
+            if (d1 < d2)
+                selectedPoint = 1;
+            else
+                selectedPoint = 2;
+        }
+
+        public override void AddPoint(Point point)
+        {
+            EndPoint = point;
         }
     }
 }
